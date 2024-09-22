@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <string.h> 
-#include <bof.h>
-#include <utilities.h>
-#include <machine_types.h>
-#include <instruction.h>
-
-//macros
-
-
-//structs
+#include <machine.h> 
 
 int main(int argc, char** argv){
 //check input was provided
@@ -30,10 +22,8 @@ if(strcmp(argv[1],"-p")){
     filename = (char*) malloc(sizeof(argv[1]));
     strcpy(filename, argv[1]);
 }
-//initalize stack (use test scripts to inform how we do this)
 
-//read bof file input using bof library functions
 
-//seperate each word into high level variables so that we can perform the appropriate operation (i.e. function from machine.c module)
+machine(printModeBool, filename);
 
 }
