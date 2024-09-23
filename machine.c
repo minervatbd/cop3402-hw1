@@ -27,8 +27,8 @@ void machine(int mode, char* inputFilename){
 }
 
 void init(){
-//initalize all registers to 0
-generalPurposeRegisters = (address_type*) calloc(sizeof(address_type), 8);
+//initalize all registers to 0 (fp and sp are members of the stack struct)
+generalPurposeRegisters = (word_type*) calloc(sizeof(word_type), 6);
 //read header for proper initalization
    
     return;
