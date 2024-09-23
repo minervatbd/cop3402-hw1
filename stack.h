@@ -1,3 +1,4 @@
-typedef struct stack{
-    //members
-};
+typedef struct {
+    int top;
+
+} Stack;

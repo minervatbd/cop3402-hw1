@@ -4,7 +4,7 @@
 #include "instruction.h"
 #include "stack.h"
 
-address_type generalPurposeRegisters[8];
+address_type* generalPurposeRegisters;
 
 void machine(int mode, char* inputFilename){
     int pc, hi, lo;
@@ -25,6 +25,8 @@ void machine(int mode, char* inputFilename){
 }
 
 void init(int* pc, int* hi, int* lo, int* inv ){
+//initalize all registers to 0
+generalPurposeRegisters = (address_type*) calloc(sizeof(address_type), 8);
 //read header for proper initalization
    
     return;
