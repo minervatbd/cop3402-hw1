@@ -4,14 +4,16 @@
 #include "instruction.h"
 #include "stack.h"
 
-address_type* generalPurposeRegisters;
+//global variables to simulate stack
+static word_type* generalPurposeRegisters;
+static address_type pc;
+static uword_type hi, lo;
+static int  invariantCheck;
+static union memory mainMemory;
 
 void machine(int mode, char* inputFilename){
-    int pc, hi, lo;
-    int invariantCheck;
-    //memory mainMemory;
 //initalize stack
-
+    //init();
 //read bof file input using bof library functions
     BOFFILE instructions = bof_write_open(inputFilename);
 
@@ -24,7 +26,7 @@ void machine(int mode, char* inputFilename){
 
 }
 
-void init(int* pc, int* hi, int* lo, int* inv ){
+void init(){
 //initalize all registers to 0
 generalPurposeRegisters = (address_type*) calloc(sizeof(address_type), 8);
 //read header for proper initalization
