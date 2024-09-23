@@ -12,3 +12,4 @@ bin_instr_t instrs[MAX_MEMORY_SIZE];
 } memory;
 
 void machine(int mode, char* inputFilename);
+void init();

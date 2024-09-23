@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h> 
-#include <machine.h> 
+#include "machine.h"
 
 int main(int argc, char** argv){
 //check input was provided
