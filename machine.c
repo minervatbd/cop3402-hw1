@@ -26,6 +26,10 @@ void machine(int mode, char* inputFilename)
     // initialize registers using header data
     init(header, stack);
 
+    word_type instruction = bof_read_word;
+
+    opcode_type opcode = getOpcode(instruction);
+
     //1) read word in
     //2) parse instruction type
 
@@ -58,4 +62,9 @@ void init(BOFHeader header, Stack* stack)
 int checkInvariants()
 {
 
+}
+
+opcode_type getOpcode(word_type instr) 
+{
+    return (opcode_type) (0xF0000000 ^ instr) >> 28;
 }
