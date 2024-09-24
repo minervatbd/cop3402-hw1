@@ -11,32 +11,37 @@ static uword_type hi, lo;
 static int  invariantCheck;
 static union memory mainMemory;
 
-void machine(int mode, char* inputFilename){
+void machine(int mode, char* inputFilename)
+{
 
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
     BOFHeader header = bof_read_header(inFile);
 
     //initalize stack
-    init(header);
+    Stack* stack = init(header);
 
 
-//1) read word in
-//2) parse instruction type
+    //1) read word in
+    //2) parse instruction type
 
 
-//seperate each word into high level variables so that we can perform the appropriate operation (i.e. function from machine.c module)
+    //seperate each word into high level variables so that we can perform the appropriate operation (i.e. function from machine.c module)
 
 }
 
-void init (BOFHeader header){
-//initalize all registers to 0 (fp and sp are members of the stack struct)
-generalPurposeRegisters = (word_type*) calloc(sizeof(word_type), 6);
-//read header for proper initalization
-   
-    return;
+Stack* init(BOFHeader header)
+{
+    //initalize all registers to 0 (fp and sp are members of the stack struct)
+    generalPurposeRegisters = (word_type*) calloc(sizeof(word_type), 6);
+
+    //read header for proper initalization
+    Stack* stack = initalizeStack();
+
+    return stack;
 }
 
-int checkInvariants(){
+int checkInvariants()
+{
 
 }
