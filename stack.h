@@ -10,7 +10,7 @@ typedef struct{
     word_type stackMemory[STACK_HEIGHT];
 } Stack;
 
-extern Stack* initalizeStack(Stack* stack);
+extern Stack* initalizeStack();
 
 //return data relevant to stack and AR contents
 extern uword_type ARSize(Stack* stack);
