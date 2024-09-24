@@ -35,6 +35,16 @@ Stack* init(BOFHeader header)
     //initalize all registers to 0 (fp and sp are members of the stack struct)
     generalPurposeRegisters = (word_type*) calloc(sizeof(word_type), 6);
 
+    // set $gp to header data start address 
+    generalPurposeRegisters[0] = header.data_start_address;
+
+    // set $sp and $fp to bottom of stack address, must be strictly greater than data start address
+    generalPurposeRegisters[1] = header.stack_bottom_addr;
+    generalPurposeRegisters[2] = header.stack_bottom_addr;
+
+    // set pc to text address start
+    pc = header.text_start_address;
+
     //read header for proper initalization
     Stack* stack = initalizeStack();
 
