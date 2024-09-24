@@ -33,15 +33,164 @@ void machine(int mode, char* inputFilename)
     instr_type type = instruction_type(instruction);
 
     // big switch thing for every single type of instruction
-    switch (instruction.comp.op) 
+    switch (instruction.comp.op) // pretending its a computer instruction to get opcode
     {
         // opcode is 0; comp format instructions pt 1
         case COMP_O:
-        
+        switch (instruction.comp.func)
+        {
+            case NOP_F: // does nothing
+
+            break;
+
+            case ADD_F: // add
+
+            break;
+
+            case SUB_F: // subtract
+
+            break;
+
+            case CPW_F: // copy word
+
+            break;
+
+            case AND_F: // bitwise and
+
+            break;
+
+            case BOR_F: // bitwise or
+
+            break;
+
+            case NOR_F: // bitwise not-or
+
+            break;
+
+            case XOR_F: // bitwise x-or
+
+            break;
+
+            case LWR_F: // load word into register
+
+            break;
+
+            case SWR_F: // store word from register
+
+            break;
+
+            case SCA_F: // store computed address
+
+            break;
+
+            case LWI_F: // load word indirect
+
+            break;
+
+            case NEG_F: // negate
+
+            break;
+
+            // error
+            default:
+
+            break;
+        }
         break;
 
         // opcode is 1; comp format instructions pt 2 and system calls
         case OTHC_O:
+        switch (instruction.comp.func) 
+        {
+            case LIT_F: // literal (load)
+
+            break;
+
+            case ARI_F: // add 
+
+            break;
+
+            case SRI_F: // subtract register immediate
+
+            break;
+
+            case MUL_F: // multiply
+
+            break;
+
+            case DIV_F: // divide
+
+            break;
+
+            case CFHI_F: // copy from HI
+
+            break;
+
+            case CFLO_F: // copy from LO
+
+            break;
+
+            case SLL_F: // shift left logical
+
+            break;
+
+            case SRL_F: // shift right logical
+
+            break;
+
+            case JMP_F: // jump
+
+            break;
+
+            case CSI_F: // call subroutine indirectly
+
+            break;
+
+            case JREL_F: // jump relative to address
+
+            break;
+
+            // system calls, another nested switch
+            case SYS_F:
+
+            switch (instruction.syscall.code)
+            {
+                case exit_sc: // exit
+
+                break;
+
+                case print_str_sc: // print string
+
+                break;
+
+                case print_char_sc: // print char
+
+                break;
+
+                case read_char_sc: // get char
+
+                break;
+
+                case start_tracing_sc: // start vm tracing output
+
+                break;
+
+                case stop_tracing_sc: // no vm tracing
+
+                break;
+
+                // error
+                default:
+
+                break;
+            }
+            break;
+
+            // error
+            default:
+
+            break;
+        }
 
         break;
 
@@ -102,7 +251,7 @@ void machine(int mode, char* inputFilename)
         case RTN_O: // return from subroutine
         
         break;
-        
+
         // error
         default:
         
