@@ -22,7 +22,7 @@ void machine(int mode, char* inputFilename)
     init(header);
     
     //initalize stack
-    Stack* stack = initalizeStack()
+    Stack* stack = initalizeStack();
 
 
     //1) read word in
