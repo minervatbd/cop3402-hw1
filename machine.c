@@ -26,16 +26,88 @@ void machine(int mode, char* inputFilename)
     // initialize registers using header data
     init(header, stack);
 
-    word_type instruction = bof_read_word;
-
-    opcode_type opcode = getOpcode(instruction);
-
     //1) read word in
+    bin_instr_t instruction = instruction_read(inFile);
+
     //2) parse instruction type
+    instr_type type = instruction_type(instruction);
 
+    // big switch thing for every single type of instruction
+    switch (instruction.comp.op) 
+    {
+        // opcode is 0; comp format instructions pt 1
+        case COMP_O:
+        
+        break;
 
-    //seperate each word into high level variables so that we can perform the appropriate operation (i.e. function from machine.c module)
+        // opcode is 1; comp format instructions pt 2 and system calls
+        case OTHC_O:
 
+        break;
+
+        // all the immediate instructions
+        case ADDI_O: // add immediate
+        
+        break;
+        
+        case ANDI_O: // bitwise and immediate
+        
+        break;
+        
+        case BORI_O: // bitwise or immediate
+        
+        break;
+        
+        case NORI_O: // bitwise not-or immediate
+        
+        break;
+        
+        case XORI_O: // bitwise x-or immediate
+        
+        break;
+        
+        case BEQ_O: // branch on equal
+        
+        break;
+        
+        case BGEZ_O: // branch >= 0
+        
+        break;
+        
+        case BGTZ_O: // branch > 0
+        
+        break;
+        
+        case BLEZ_O: // branch <= 0
+        
+        break;
+        
+        case BLTZ_O: // branch < 0
+        
+        break;
+        
+        case BNE_O: // branch not equal
+        
+        break;
+        
+        // jump format instructions
+        case JMPA_O: // jump to given address
+        
+        break;
+        
+        case CALL_O: // call subroutine
+        
+        break;
+        
+        case RTN_O: // return from subroutine
+        
+        break;
+        
+        // error
+        default:
+        
+        break;
+    }
 }
 
 void init(BOFHeader header, Stack* stack)
@@ -62,9 +134,4 @@ void init(BOFHeader header, Stack* stack)
 int checkInvariants()
 {
 
-}
-
-opcode_type getOpcode(word_type instr) 
-{
-    return (opcode_type) (0xF0000000 ^ instr) >> 28;
 }
