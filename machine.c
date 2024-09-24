@@ -18,8 +18,11 @@ void machine(int mode, char* inputFilename)
     BOFFILE inFile = bof_read_open(inputFilename);
     BOFHeader header = bof_read_header(inFile);
 
+    // initialize registers using header data
+    init(header);
+    
     //initalize stack
-    Stack* stack = init(header);
+    Stack* stack = initalizeStack()
 
 
     //1) read word in
@@ -30,7 +33,7 @@ void machine(int mode, char* inputFilename)
 
 }
 
-Stack* init(BOFHeader header)
+void init(BOFHeader header)
 {
     //initalize all registers to 0 (fp and sp are members of the stack struct)
     generalPurposeRegisters = (word_type*) calloc(sizeof(word_type), 6);
@@ -45,10 +48,7 @@ Stack* init(BOFHeader header)
     // set pc to text address start
     pc = header.text_start_address;
 
-    //read header for proper initalization
-    Stack* stack = initalizeStack();
-
-    return stack;
+    return;
 }
 
 int checkInvariants()
