@@ -1,5 +1,6 @@
 #include "instruction.h"
 #include "machine_types.h"
+#include "stack.h"
 
 //macros
 #define MAX_MEMORY_SIZE 32768
@@ -12,4 +13,4 @@ bin_instr_t instrs[MAX_MEMORY_SIZE];
 } memory;
 
 void machine(int mode, char* inputFilename);
-void init();
+void init(BOFHeader header, Stack* stack);
