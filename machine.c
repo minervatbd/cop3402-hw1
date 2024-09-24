@@ -4,6 +4,11 @@
 #include "instruction.h"
 #include "stack.h"
 
+#include "instr_comp_0.h"
+#include "instr_comp_1.h"
+#include "instr_immed.h"
+#include "instr_jump.h"
+
 //global variables to simulate stack
 static word_type gp; // globals pointer register
 static word_type ra; // return address register
