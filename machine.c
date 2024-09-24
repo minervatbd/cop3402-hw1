@@ -12,10 +12,13 @@ static int  invariantCheck;
 static union memory mainMemory;
 
 void machine(int mode, char* inputFilename){
-//initalize stack
-    //init();
-//read bof file input using bof library functions
-    BOFFILE instructions = bof_write_open(inputFilename);
+
+    //read bof file input using bof library functions
+    BOFFILE inFile = bof_read_open(inputFilename);
+    BOFHeader header = bof_read_header(inFile);
+
+    //initalize stack
+    init(header);
 
 
 //1) read word in
@@ -26,7 +29,7 @@ void machine(int mode, char* inputFilename){
 
 }
 
-void init(){
+void init (BOFHeader header){
 //initalize all registers to 0 (fp and sp are members of the stack struct)
 generalPurposeRegisters = (word_type*) calloc(sizeof(word_type), 6);
 //read header for proper initalization
