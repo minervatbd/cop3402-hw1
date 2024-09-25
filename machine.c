@@ -2,6 +2,7 @@
 #include "utilities.h"
 #include "machine_types.h"
 #include "instruction.h"
+#include "regname.h"
 #include "stack.h"
 
 #include "instr_comp_0.h"
@@ -276,8 +277,8 @@ void init(BOFHeader header, Stack* stack)
     gp = header.data_start_address;
 
     // set $sp and $fp to bottom of stack address, must be strictly greater than data start address
-    stack->sp = header.stack_bottom_addr;
-    stack->fp = header.stack_bottom_addr;
+    stack->GPR[SP] = header.stack_bottom_addr;
+    stack->GPR[FP] = header.stack_bottom_addr;
 
     // set pc to text address start
     pc = header.text_start_address;
