@@ -5,15 +5,16 @@
 Stack* initalizeStack(){
     Stack* myStack = (Stack*) malloc(sizeof(Stack));
     myStack->topOffset = 0;
+    
     return myStack;
 }
 
 uword_type ARSize(Stack* stack){
     return stack->GPR[SP] - stack->GPR[FP]; 
 }
-//unsure of how to implement this for now (is this size of AR + size of stack memory? or just stack memory?)
+
 uword_type stackSize(Stack* stack){
-    
+    return ARSize(stack) + stack->topOffset;
 }
  
 address_type ARTop(Stack* stack){

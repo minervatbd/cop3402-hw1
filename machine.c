@@ -11,9 +11,6 @@
 #include "instr_jump.h"
 
 //global variables to simulate stack
-static word_type gp; // globals pointer register
-static word_type ra; // return address register
-static word_type* generalRegisters; // other registers (r3-r6)
 static address_type pc;
 static uword_type hi, lo;
 static int  invariantCheck;
@@ -267,14 +264,8 @@ void machine(int mode, char* inputFilename)
 
 void init(BOFHeader header, Stack* stack)
 {
-    // initalize general registers to 0
-    generalRegisters = (word_type*) calloc(sizeof(word_type), 4);
-
-    for (int c = 0; c < 4; c++)
-        generalRegisters[c] = 0;
-
     // set $gp to header data start address 
-    gp = header.data_start_address;
+    stack->GPR[GP] = header.data_start_address;
 
     // set $sp and $fp to bottom of stack address, must be strictly greater than data start address
     stack->GPR[SP] = header.stack_bottom_addr;
