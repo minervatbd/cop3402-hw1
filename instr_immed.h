@@ -12,4 +12,4 @@ extern void branchGreaterEqualThanZero(bin_instr_t i);
 extern void branchGreaterThanZero(bin_instr_t i);
 extern void branchLessEqualThanZero(bin_instr_t i);
 extern void branchLessThanZero(bin_instr_t i);
-extern void brnachNotEqual(bin_instr_t i);
+extern void branchNotEqual(bin_instr_t i);

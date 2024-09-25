@@ -51,7 +51,7 @@ void branchLessThanZero(bin_instr_t i)
 
 }
 
-void brnachNotEqual(bin_instr_t i)
+void branchNotEqual(bin_instr_t i)
 {
     
 }
