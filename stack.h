@@ -4,10 +4,9 @@
 
 //stack that grows upward (as opposed to downward example provided in class)
 typedef struct{
-    address_type fp;
-    address_type sp;
     int topOffset;
     word_type stackMemory[STACK_HEIGHT];
+    address_type GPR[8];
 } Stack;
 
 extern Stack* initalizeStack();
