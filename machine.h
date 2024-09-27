@@ -1,3 +1,6 @@
+#ifndef MACHINE_H
+#define MACHINE_H
+
 #include "instruction.h"
 #include "machine_types.h"
 #include "stack.h"
@@ -14,3 +17,7 @@ bin_instr_t instrs[MAX_MEMORY_SIZE];
 
 void machine(int mode, char* inputFilename);
 void init(BOFHeader header, Stack* stack);
+
+void printMode(BOFFILE bof);
+
+#endif

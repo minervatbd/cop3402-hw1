@@ -1,3 +1,6 @@
+#ifndef _INSTR_COMP_0_H
+#define _INSTR_COMP_0_H
+
 #include "machine.h"
 #include "instruction.h"
 
@@ -14,3 +17,5 @@ extern void storeWord(bin_instr_t i);
 extern void storeAddr(bin_instr_t i);
 extern void loadWordIndirect(bin_instr_t i);
 extern void negate(bin_instr_t i);
+
+#endif
