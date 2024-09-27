@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "machine.h"
 #include "machine_main.h"
 #include "utilities.h"
+#include "machine.h"
 
 int main(int argc, char** argv){
 //check input was provided
