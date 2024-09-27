@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 #include "machine_types.h"
 
 #define STACK_HEIGHT 4096
@@ -30,3 +33,5 @@ extern void addAR(Stack* stack, word_type AR);
 extern void subAR(Stack* stack);
 extern void allocateSpace(Stack* stack);
 extern void deallocate(Stack* stack);
+
+#endif
