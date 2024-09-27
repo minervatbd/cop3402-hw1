@@ -29,9 +29,9 @@ address_type ARBottom(Stack* stack){
 int stackOkay(Stack* stack){
     if(stack->GPR[SP] <= stack->GPR[FP])
         return 0;
-    if(stack->GPR[SP] > STACK_HEIGHT)
+    if(stackSize(stack) > STACK_HEIGHT)
         return 0;
-    else if(stack->GPR[SP] == STACK_HEIGHT)
+    else if(stackSize(stack) == STACK_HEIGHT)
         return 2;
     return 1;
 }
