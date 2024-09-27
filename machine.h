@@ -1,3 +1,6 @@
+#ifndef MACHINE_H
+#define MACHINE_H
+
 #include "instruction.h"
 #include "machine_types.h"
 #include "stack.h"
@@ -16,3 +19,5 @@ void machine(int mode, char* inputFilename);
 void init(BOFHeader header, Stack* stack);
 
 void printMode(BOFFILE bof);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef _INSTR_IMMED_H
+#define _INSTR_IMMED_H
+
 #include "machine.h"
 #include "instruction.h"
 
@@ -13,3 +16,5 @@ extern void branchGreaterThanZero(bin_instr_t i);
 extern void branchLessEqualThanZero(bin_instr_t i);
 extern void branchLessThanZero(bin_instr_t i);
 extern void branchNotEqual(bin_instr_t i);
+
+#endif
