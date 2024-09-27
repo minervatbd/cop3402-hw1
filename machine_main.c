@@ -1,5 +1,9 @@
 #include <stdio.h>
-#include <string.h> 
+#include <string.h>
+#include <stdlib.h>
+
+#include "machine_main.h"
+#include "utilities.h"
 #include "machine.h"
 
 int main(int argc, char** argv){
