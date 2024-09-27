@@ -14,3 +14,5 @@ bin_instr_t instrs[MAX_MEMORY_SIZE];
 
 void machine(int mode, char* inputFilename);
 void init(BOFHeader header, Stack* stack);
+
+void printMode(BOFFILE bof);
