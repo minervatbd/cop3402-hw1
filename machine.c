@@ -22,9 +22,6 @@ void machine(int mode, char* inputFilename)
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
 
-    // read header
-    BOFHeader header = bof_read_header(inFile);
-
     // -p has been passed, print mode function
     if (mode)
     {
@@ -34,6 +31,9 @@ void machine(int mode, char* inputFilename)
     // otherwise, normal execution
     else
     {
+        // read header
+        BOFHeader header = bof_read_header(inFile);
+
         //initalize stack
         Stack* stack = initalizeStack();
 
@@ -297,5 +297,18 @@ int checkInvariants()
 // reads instructions from bof file and prints them properly
 void printMode(BOFFILE bof)
 {
+    // read header
+    BOFHeader header = bof_read_header(bof);
+
+    word_type pc = header.data_start_address;
+
+    printf("Address Instruction\n");
+
+    while (!bof_at_eof(bof))
+    {
+        printf("%d: %s\n", pc, instruction_assembly_form(pc, instruction_read(bof)));
+        pc++;
+    }
+
     return;
 }
