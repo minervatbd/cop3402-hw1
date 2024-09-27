@@ -2,13 +2,14 @@
 #define STACK_H
 
 #include "machine_types.h"
+#include "machine.h"
 
 #define STACK_HEIGHT 4096
 
 //stack that grows upward (as opposed to downward example provided in class)
 typedef struct{
     int topOffset;
-    word_type stackMemory[STACK_HEIGHT];
+    union memory stackMemory[STACK_HEIGHT];
     address_type GPR[8];
 } Stack;
 
