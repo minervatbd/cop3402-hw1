@@ -13,7 +13,6 @@
 //global variables to simulate stack
 static address_type pc;
 static uword_type hi, lo;
-static int  invariantCheck;
 extern union mem_u memory;
 
 void machine(int mode, char* inputFilename)
@@ -317,6 +316,37 @@ void printMode(BOFFILE bof)
 }
 
 
-int invariantCheck(){
-    
+int invariantCheck(union mem_u memory, Stack* stack, address_type pc){
+    //evaluate invariant conditions and print error -> return 0 if conidtion is violated, else print 1
+    if(stack->GPR[GP] < 0){
+        sprintf(stderr, "\nInvariant violated. Globals pointer cannot be less than zero.\n");
+        return 0;
+    }
+
+    if(stack->GPR[GP] >= stack->GPR[SP]){
+        sprintf(stderr, "\nInvariant violated. Globals pointer cannot be greater than the stack pointer.\n");
+        return 0;
+    }
+
+    if(stack->GPR[SP] > stack->GPR[FP]){
+        sprintf(stderr, "\nInvariant violated. Stack pointer cannot be greater than the frame pointer.\n");
+        return 0;
+    }
+
+    if(stack->GPR[FP] >= MAX_MEMORY_SIZE){
+        sprintf(stderr, "\nInvariant violated. Frame pointer cannot reach maximum memory address.\n");
+        return 0;
+    }
+
+    if(pc < 0){
+        sprintf(stderr, "\nInvariant violated. Program counter must be a nonzero address.\n");
+        return 0;
+    }
+
+    if(pc >= MAX_MEMORY_SIZE){
+        sprintf(stderr, "\nInvariant violated. Program counter must not exceed maximum memory address.\n");
+        return 0;
+    }
+
+    return 1;
 }
