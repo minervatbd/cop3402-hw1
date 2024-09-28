@@ -2,7 +2,6 @@
 #define STACK_H
 
 #include "machine_types.h"
-#include "machine.h"
 
 #define STACK_HEIGHT 4096
 

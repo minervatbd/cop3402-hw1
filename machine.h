@@ -5,18 +5,21 @@
 #include "machine_types.h"
 #include "stack.h"
 
-//macros
-#define MAX_MEMORY_SIZE 32768
+#define MAX_MEMORY_SIZE 32768 
 
-//structs
-static union mem_u {
+//our union
+extern union mem_u {
 word_type words[MAX_MEMORY_SIZE];
 uword_type uwords[MAX_MEMORY_SIZE];
 bin_instr_t instrs[MAX_MEMORY_SIZE];
 } memory;
 
+
 void machine(int mode, char* inputFilename);
 void init(BOFHeader header, Stack* stack);
+//executed every machine cycle
+int invariantCheck(Stack* stack, address_type pc);
+
 
 void printMode(BOFFILE bof);
 

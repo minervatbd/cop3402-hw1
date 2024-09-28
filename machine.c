@@ -13,18 +13,17 @@
 //global variables to simulate stack
 static address_type pc;
 static uword_type hi, lo;
-static int  invariantCheck;
-static union memory mainMemory;
+extern union mem_u memory;
 
 void machine(int mode, char* inputFilename)
 {
-
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
 
     // -p has been passed, print mode function
     if (mode)
     {
+        printMode(inFile);
         return;
     }
     
@@ -33,6 +32,7 @@ void machine(int mode, char* inputFilename)
     {
         // read header
         BOFHeader header = bof_read_header(inFile);
+        fseek(inFile.fileptr, 0, SEEK_SET);
 
         //initalize stack
         Stack* stack = initalizeStack();
@@ -300,15 +300,53 @@ void printMode(BOFFILE bof)
     // read header
     BOFHeader header = bof_read_header(bof);
 
-    word_type pc = header.data_start_address;
+    //reset file pointer to instruction start
+    word_type pc = header.text_start_address;
+    // fseek(bof.fileptr, pc, SEEK_SET);
 
     printf("Address Instruction\n");
 
     while (!bof_at_eof(bof))
     {
-        printf("%d: %s\n", pc, instruction_assembly_form(pc, instruction_read(bof)));
+        printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
         pc++;
     }
 
     return;
+}
+
+
+int invariantCheck(Stack* stack, address_type pc){
+    //evaluate invariant conditions and print error -> return 0 if conidtion is violated, else print 1
+    if(stack->GPR[GP] < 0){
+        sprintf(stderr, "\nInvariant violated. Globals pointer cannot be less than zero.\n");
+        return 0;
+    }
+
+    if(stack->GPR[GP] >= stack->GPR[SP]){
+        sprintf(stderr, "\nInvariant violated. Globals pointer cannot be greater than the stack pointer.\n");
+        return 0;
+    }
+
+    if(stack->GPR[SP] > stack->GPR[FP]){
+        sprintf(stderr, "\nInvariant violated. Stack pointer cannot be greater than the frame pointer.\n");
+        return 0;
+    }
+
+    if(stack->GPR[FP] >= MAX_MEMORY_SIZE){
+        sprintf(stderr, "\nInvariant violated. Frame pointer cannot reach maximum memory address.\n");
+        return 0;
+    }
+
+    if(pc < 0){
+        sprintf(stderr, "\nInvariant violated. Program counter must be a nonzero address.\n");
+        return 0;
+    }
+
+    if(pc >= MAX_MEMORY_SIZE){
+        sprintf(stderr, "\nInvariant violated. Program counter must not exceed maximum memory address.\n");
+        return 0;
+    }
+
+    return 1;
 }
