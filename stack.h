@@ -8,7 +8,8 @@
 //stack that grows upward (as opposed to downward example provided in class)
 typedef struct{
     int topOffset;
-    word_type stackMemory[STACK_HEIGHT];
+    union mem_u* stackMemory;
+    int maxSize; 
     address_type GPR[8];
 } Stack;
 
