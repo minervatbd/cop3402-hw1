@@ -14,11 +14,10 @@
 static address_type pc;
 static uword_type hi, lo;
 static int  invariantCheck;
-static union memory mainMemory;
+extern union mem_u memory;
 
 void machine(int mode, char* inputFilename)
 {
-
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
 
