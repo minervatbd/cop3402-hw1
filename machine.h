@@ -17,6 +17,9 @@ bin_instr_t instrs[MAX_MEMORY_SIZE];
 
 void machine(int mode, char* inputFilename);
 void init(BOFHeader header, Stack* stack);
+//executed every machine cycle
+int invariantCheck();
+
 
 void printMode(BOFFILE bof);
 

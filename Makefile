@@ -12,7 +12,7 @@ RM = rm -f
 SUBMISSIONZIPFILE = submission.zip
 ZIP = zip -9
 # Add the names of your own files with a .o suffix to link them into the VM
-VM_OBJECTS = stack.o machine_main.o machine.o \
+VM_OBJECTS = machine_main.o machine.o stack.o \
              machine_types.o instruction.o bof.o \
              regname.o utilities.o \
 			 instr_comp_0.o instr_comp_1.o instr_immed.o instr_jump.o \

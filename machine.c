@@ -24,6 +24,7 @@ void machine(int mode, char* inputFilename)
     // -p has been passed, print mode function
     if (mode)
     {
+        printMode(inFile);
         return;
     }
     
@@ -32,6 +33,7 @@ void machine(int mode, char* inputFilename)
     {
         // read header
         BOFHeader header = bof_read_header(inFile);
+        fseek(inFile.fileptr, 0, SEEK_SET);
 
         //initalize stack
         Stack* stack = initalizeStack();
@@ -299,15 +301,22 @@ void printMode(BOFFILE bof)
     // read header
     BOFHeader header = bof_read_header(bof);
 
-    word_type pc = header.data_start_address;
+    //reset file pointer to instruction start
+    word_type pc = header.text_start_address;
+    // fseek(bof.fileptr, pc, SEEK_SET);
 
     printf("Address Instruction\n");
 
     while (!bof_at_eof(bof))
     {
-        printf("%d: %s\n", pc, instruction_assembly_form(pc, instruction_read(bof)));
+        printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
         pc++;
     }
 
     return;
+}
+
+
+int invariantCheck(){
+    
 }
