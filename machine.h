@@ -12,7 +12,7 @@ extern union mem_u {
 word_type words[MAX_MEMORY_SIZE];
 uword_type uwords[MAX_MEMORY_SIZE];
 bin_instr_t instrs[MAX_MEMORY_SIZE];
-} memory;
+} memory, stackMemory;
 
 
 void machine(int mode, char* inputFilename);

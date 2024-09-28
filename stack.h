@@ -9,7 +9,7 @@
 typedef struct{
     int topOffset;
     union mem_u* stackMemory;
-    int maxSize;
+    int maxSize; 
     address_type GPR[8];
 } Stack;
 

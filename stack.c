@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include "machine_types.h"
+#include "machine.h"
 #include "regname.h"
 #include "stack.h"
 
