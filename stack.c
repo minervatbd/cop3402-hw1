@@ -5,7 +5,7 @@
 Stack* initalizeStack(){
     Stack* myStack = (Stack*) malloc(sizeof(Stack));
     myStack->topOffset = 0;
-    
+    myStack->maxSize = STACK_HEIGHT;
     return myStack;
 }
 
@@ -25,10 +25,8 @@ address_type ARBottom(Stack* stack){
     return stack->GPR[FP];
 }
 
-//if sp > fp and !sp> max size, 1 for invariant pass, 2 to indicate stack is full
+//1 for size invariant pass, 2 to indicate stack is full
 int stackOkay(Stack* stack){
-    if(stack->GPR[SP] <= stack->GPR[FP])
-        return 0;
     if(stackSize(stack) > STACK_HEIGHT)
         return 0;
     else if(stackSize(stack) == STACK_HEIGHT)
@@ -37,40 +35,44 @@ int stackOkay(Stack* stack){
 }
 
 void push(Stack* stack, word_type val){
-    stack->stackMemory[stack->GPR[SP] + stack->topOffset] = val;
+    stack->stackMemory->words[stack->GPR[SP]] = val;
     stack->topOffset++;
 
     return;
 }
 
 void pop(Stack* stack){
-    stack->stackMemory[stack->GPR[SP] + stack->topOffset] = 0;
+    stack->stackMemory->words[stack->GPR[SP] - stack->topOffset] = 0;
     stack->topOffset--;
 
     return;
 }
 
 word_type peek(Stack* stack){
-    return stack->stackMemory[stack->GPR[SP] + stack->topOffset];
+    return stack->stackMemory->words[stack->GPR[SP] + stack->topOffset];
 }
 
 
 void addAR(Stack* stack, word_type AR){
-    stack->stackMemory[stack->GPR[SP]-1] = AR;
-    for(int i= stack->GPR[SP] + stack->topOffset; i > stack->GPR[SP]; i--)
-        stack->stackMemory[i+1] = stack->stackMemory[i];
-    
-    stack->GPR[SP]++;
+    stack->stackMemory->words[stack->GPR[FP]] = AR;
+    if(stackOkay(stack)!=2){
+        for(int i= stack->GPR[SP] - stack->topOffset; i < stack->GPR[SP]; i--)
+            stack->stackMemory->words[i-1] = stack->stackMemory->words[i];
+    } 
+
+    stack->GPR[SP]--;
+    stack->GPR[FP]--;
 
     return;
 }
 
 void subAR(Stack* stack){
-    stack->stackMemory[stack->GPR[SP]-1] = 0;
-    for(int i= stack->GPR[SP] + stack->topOffset; i > stack->GPR[SP]; i--)
-        stack->stackMemory[i-1] = stack->stackMemory[i];
+    stack->stackMemory->words[stack->GPR[FP]] = 0;
+    for(int i= stack->GPR[SP]; i > stack->GPR[SP] - stack->topOffset; i--)
+        stack->stackMemory->words[i+1] = stack->stackMemory->words[i];
 
-    stack->GPR[SP]--;    
+    stack->GPR[SP]++;   
+    stack->GPR[FP]++; 
 
     return;
 }
