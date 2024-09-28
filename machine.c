@@ -316,7 +316,7 @@ void printMode(BOFFILE bof)
 }
 
 
-int invariantCheck(union mem_u memory, Stack* stack, address_type pc){
+int invariantCheck(Stack* stack, address_type pc){
     //evaluate invariant conditions and print error -> return 0 if conidtion is violated, else print 1
     if(stack->GPR[GP] < 0){
         sprintf(stderr, "\nInvariant violated. Globals pointer cannot be less than zero.\n");
