@@ -12,8 +12,8 @@
 #include "instr_jump.h"
 
 //global variables to simulate stack
-extern address_type pc;
-extern uword_type hi, lo;
+address_type pc;
+uword_type hi, lo;
 
 void machine(int mode, char* inputFilename)
 {
