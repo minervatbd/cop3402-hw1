@@ -334,32 +334,38 @@ void printMode(BOFFILE bof)
         if (word == 0 && printNextZero == 1)
         {
             sprintf(currentOut, "%8d: %d", pc, word);
+            len += strlen(currentOut);
+            printf(currentOut);
             printNextZero = 0;
         }
             
         else if (word == 0 && printNextZero == 0)
         {
             sprintf(currentOut, DATA_SEPARATOR);
+            len += strlen(currentOut);
+            printf(currentOut);
             printNextZero = -1;
         }
 
         else if (word != 0)
         {
             sprintf(currentOut, "%8d: %d", pc, word);
+            len += strlen(currentOut);
+            printf(currentOut);
             printNextZero = 1;
         }
 
-        if (strlen(currentOut) > MAX_DATA_LINE_LENGTH)
+        if (len > MAX_DATA_LINE_LENGTH)
         {
-            printf("%s\n", currentOut);
-            currentOut = "";
+            printf("\n", currentOut);
+            len = 0;
         }
 
         pc++;
     }
     //sprintf(currentOut, "%8d: 0%s");
 
-    printf("%s\n", currentOut);
+    //printf("%s\n", currentOut);
 
     return;
 }
