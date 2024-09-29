@@ -306,8 +306,8 @@ void printMode(BOFFILE bof)
     // printing instructions
     while (pc < header.text_start_address + header.text_length)
     {
-        //printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
-        instruction_print(stdout, pc, instruction_read(bof));
+        printf("%6d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
+        //instruction_print(stdout, pc, instruction_read(bof));
         pc++;
     }
 
