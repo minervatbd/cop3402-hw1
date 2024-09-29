@@ -308,7 +308,7 @@ void printMode(BOFFILE bof)
         pc++;
     }
 
-    prinf("\n\nData section\n\n");
+    printf("\n\nData section\n\n");
 
     // jump to data start address
     pc = header.data_start_address;
