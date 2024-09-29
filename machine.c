@@ -289,11 +289,6 @@ void init(BOFHeader header, Stack* stack)
     return;
 }
 
-int checkInvariants()
-{
-
-}
-
 // reads instructions from bof file and prints them properly
 void printMode(BOFFILE bof)
 {
@@ -302,11 +297,11 @@ void printMode(BOFFILE bof)
 
     //reset file pointer to instruction start
     word_type pc = header.text_start_address;
-    // fseek(bof.fileptr, pc, SEEK_SET);
 
     printf("Address Instruction\n");
+    bin_instr_t in;
 
-    while (!bof_at_eof(bof))
+    while (pc < header.data_start_address)
     {
         printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
         pc++;
