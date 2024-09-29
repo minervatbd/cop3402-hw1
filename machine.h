@@ -7,12 +7,12 @@
 
 #define MAX_MEMORY_SIZE 32768 
 
-//our union
+//our union (mainMemory is for instructions, all other data in stack memory, temp vars are to be deleted later)
 extern union mem_u {
 word_type words[MAX_MEMORY_SIZE];
 uword_type uwords[MAX_MEMORY_SIZE];
 bin_instr_t instrs[MAX_MEMORY_SIZE];
-} memory, stackMemory;
+} mainMemory, tempMem1, tempMem2, tempMem3, stackMemory;
 
 
 void machine(int mode, char* inputFilename);
