@@ -301,9 +301,56 @@ void printMode(BOFFILE bof)
     printf("Address Instruction\n");
     bin_instr_t in;
 
-    while (pc < header.data_start_address)
+    // printing instructions
+    while (pc < header.text_start_address + header.text_length)
     {
         printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
+        pc++;
+    }
+
+    prinf("\n\nData section\n\n");
+
+    // jump to data start address
+    pc = header.data_start_address;
+
+    // current word
+    word_type word;
+
+    // current line length
+    int len = 0;
+
+    // if a zero is printed, dont print any zeros after that.
+    int printNextZero = 1;
+
+    // data section start
+    while (!bof_at_eof(bof))
+    {
+        word = bof_read_word(bof);
+
+        if (word == 0 && printNextZero == 1)
+        {
+            printf("%d: %d     ", pc, word);
+            printNextZero = 0;
+        }
+            
+        if (word == 0 && printNextZero == 0)
+        {
+            printf("%s", DATA_SEPARATOR);
+            printNextZero = -1;
+        }
+
+        if (word != 0)
+        {
+            printf("%d: %d     ", pc, word);
+            printNextZero = 1;
+        }
+
+        if (len > MAX_DATA_LINE_LENGTH)
+        {
+            len = 0;
+            printf("\n");
+        }
+
         pc++;
     }
 

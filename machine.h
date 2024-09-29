@@ -6,6 +6,8 @@
 #include "stack.h"
 
 #define MAX_MEMORY_SIZE 32768 
+#define MAX_DATA_LINE_LENGTH 59
+#define DATA_SEPARATOR "        ...     "
 
 //our union (mainMemory is for instructions, all other data in stack memory, temp vars are to be deleted later)
 extern union mem_u {
