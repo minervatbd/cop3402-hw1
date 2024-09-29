@@ -358,13 +358,21 @@ void printMode(BOFFILE bof)
 
         if (len > MAX_DATA_LINE_LENGTH)
         {
-            printf("\n", currentOut);
+            newline(stdout);
             len = 0;
         }
 
         pc++;
     }
-    //sprintf(currentOut, "%8d: 0%s");
+
+    sprintf(currentOut, "%8d: %d", pc, 0);
+    len += strlen(currentOut);
+    printf(currentOut);
+
+    if (len > MAX_DATA_LINE_LENGTH)
+        newline(stdout);
+
+    printf("%s", DATA_SEPARATOR);
 
     //printf("%s\n", currentOut);
 
