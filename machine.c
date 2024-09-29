@@ -58,51 +58,51 @@ void machine(int mode, char* inputFilename)
                     break;
 
                 case ADD_F: // add
-                    add(instruction);
+                    add(instruction, &stack);
                     break;
 
                 case SUB_F: // subtract
-                    subtract(instruction);
+                    subtract(instruction, &stack);
                     break;
 
                 case CPW_F: // copy word
-                    copyWord(instruction);
+                    copyWord(instruction, &stack);
                     break;
 
                 case AND_F: // bitwise and
-                    bitwiseAnd(instruction);
+                    bitwiseAnd(instruction, &stack);
                     break;
 
                 case BOR_F: // bitwise or
-                    bitwiseOr(instruction);
+                    bitwiseOr(instruction, &stack);
                     break;
 
                 case NOR_F: // bitwise not-or
-                    bitwiseNor(instruction);
+                    bitwiseNor(instruction, &stack);
                     break;
 
                 case XOR_F: // bitwise x-or
-                    bitwiseXor(instruction);
+                    bitwiseXor(instruction, &stack);
                     break;
 
                 case LWR_F: // load word into register
-                    loadWord(instruction);
+                    loadWord(instruction, &stack);
                     break;
 
                 case SWR_F: // store word from register
-                    storeWord(instruction);
+                    storeWord(instruction, &stack);
                     break;
 
                 case SCA_F: // store computed address
-                    storeAddr(instruction);
+                    storeAddr(instruction, &stack);
                     break;
 
                 case LWI_F: // load word indirect
-                    loadWordIndirect(instruction);
+                    loadWordIndirect(instruction, &stack);
                     break;
 
                 case NEG_F: // negate
-                    negate(instruction);
+                    negate(instruction, &stack);
                     break;
 
                 break;
@@ -119,47 +119,47 @@ void machine(int mode, char* inputFilename)
             switch (instruction.comp.func) 
             {
                 case LIT_F: // literal (load)
-                    literalLoad(instruction);
+                    literalLoad(instruction, &stack);
                     break;
 
                 case ARI_F: // add 
-                    addRegImmediate(instruction);
+                    addRegImmediate(instruction, &stack);
                     break;
 
                 case SRI_F: // subtract register immediate
-                    subRegImmediate(instruction);
+                    subRegImmediate(instruction, &stack);
                     break;
 
                 case MUL_F: // multiply
-                    multiply(instruction);
+                    multiply(instruction, &stack, &lo, &hi);
                     break;
 
                 case DIV_F: // divide
-                    divide(instruction);
+                    divide(instruction, &stack, &lo, &hi);
                     break;
 
                 case CFHI_F: // copy from HI
-                    copyHI(instruction);
+                    copyHI(instruction, &stack, &hi);
                     break;
 
                 case CFLO_F: // copy from LO
-                    copyLO(instruction);
+                    copyLO(instruction, &stack, &lo);
                     break;
 
                 case SLL_F: // shift left logical
-                    shiftLeftLogical(instruction);
+                    shiftLeftLogical(instruction, &stack);
                     break;
 
                 case SRL_F: // shift right logical
-                    shiftRightLogical(instruction);
+                    shiftRightLogical(instruction, &stack);
                     break;
 
                 case JMP_F: // jump
-                    jump(instruction);
+                    jump(instruction, &stack, &pc);
                     break;
 
                 case CSI_F: // call subroutine indirectly
-                    callSubroutineIndirectly(instruction);
+                    callSubroutineIndirectly(instruction, &stack, &pc);
                     break;
 
                 case JREL_F: // jump relative to address
@@ -210,60 +210,60 @@ void machine(int mode, char* inputFilename)
 
             // all the immediate instructions
             case ADDI_O: // add immediate
-                addImmed(instruction);
+                addImmed(instruction, &stack);
                 break;
             
             case ANDI_O: // bitwise and immediate
-                andImmed(instruction);
+                andImmed(instruction, &stack);
                 break;
             
             case BORI_O: // bitwise or immediate
-                borImmed(instruction);
+                borImmed(instruction, &stack);
                 break;
             
             case NORI_O: // bitwise not-or immediate
-                norImmed(instruction);
+                norImmed(instruction, &stack);
                 break;
 
             case XORI_O: // bitwise x-or immediate
-                xorImmed(instruction);
+                xorImmed(instruction, &stack);
                 break;
 
             case BEQ_O: // branch on equal
-                branchOnEqual(instruction);
+                branchOnEqual(instruction, &stack, &pc);
                 break;
 
             case BGEZ_O: // branch >= 0
-                branchGreaterEqualThanZero(instruction);
+                branchGreaterEqualThanZero(instruction, &stack, &pc);
                 break;
 
             case BGTZ_O: // branch > 0
-                branchGreaterThanZero(instruction);
+                branchGreaterThanZero(instruction, &stack, &pc);
                 break;
 
             case BLEZ_O: // branch <= 0
-                branchLessEqualThanZero(instruction);
+                branchLessEqualThanZero(instruction, &stack, &pc);
                 break;
 
             case BLTZ_O: // branch < 0
-                branchLessThanZero(instruction);
+                branchLessThanZero(instruction, &stack, &pc);
                 break;
 
             case BNE_O: // branch not equal
-                branchNotEqual(instruction);
+                branchNotEqual(instruction, &stack, &pc);
                 break;
 
             // jump format instructions
             case JMPA_O: // jump to given address
-                jumpToAddress(instruction);
+                jumpToAddress(instruction, &pc);
                 break;
 
             case CALL_O: // call subroutine
-                callSubroutine(instruction);
+                callSubroutine(instruction, &stack, &pc);
                 break;
 
             case RTN_O: // return from subroutine
-                returnFromSubroutine(instruction);
+                returnFromSubroutine(instruction, &stack, &pc);
                 break;
 
             // error
