@@ -323,7 +323,7 @@ void printMode(BOFFILE bof)
     int printNextZero = 1;
 
     // data section start
-    while (!bof_at_eof(bof))
+    while (pc < header.data_start_address + header.data_length)
     {
         word = bof_read_word(bof);
 
@@ -333,13 +333,13 @@ void printMode(BOFFILE bof)
             printNextZero = 0;
         }
             
-        if (word == 0 && printNextZero == 0)
+        else if (word == 0 && printNextZero == 0)
         {
             printf("%s", DATA_SEPARATOR);
             printNextZero = -1;
         }
 
-        if (word != 0)
+        else if (word != 0)
         {
             printf("%d: %d     ", pc, word);
             printNextZero = 1;
