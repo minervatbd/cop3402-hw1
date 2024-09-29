@@ -297,7 +297,7 @@ void printMode(BOFFILE bof)
 
     //reset file pointer to instruction start
     word_type pc = header.text_start_address;
-    // fseek(bof.fileptr, pc, SEEK_SET);
+    fseek(bof.fileptr, pc + sizeof(header), SEEK_SET);
 
     printf("Address Instruction\n");
 
