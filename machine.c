@@ -289,11 +289,6 @@ void init(BOFHeader header, Stack* stack)
     return;
 }
 
-int checkInvariants()
-{
-
-}
-
 // reads instructions from bof file and prints them properly
 void printMode(BOFFILE bof)
 {
