@@ -4,9 +4,6 @@
 #include "regname.h"
 #include "stack.h"
 
-// TEMP VARS TODO
-union mem_u tempMem3;
-
 void addImmed(bin_instr_t i, Stack* stack)
 {
 	stack->stackMemory->words[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] =  

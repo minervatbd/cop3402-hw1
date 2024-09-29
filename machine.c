@@ -12,9 +12,8 @@
 #include "instr_jump.h"
 
 //global variables to simulate stack
-static address_type pc;
-static uword_type hi, lo;
-extern union mem_u memory;
+extern address_type pc;
+extern uword_type hi, lo;
 
 void machine(int mode, char* inputFilename)
 {
@@ -285,6 +284,7 @@ void init(BOFHeader header, Stack* stack)
 
     // set pc to text address start
     pc = header.text_start_address;
+    hi, lo = 0;
 
     return;
 }
