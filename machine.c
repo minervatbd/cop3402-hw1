@@ -334,7 +334,7 @@ void printMode(BOFFILE bof)
 
         if (word == 0 && printNextZero == 1)
         {
-            sprintf(currentOut, "%8d: %d", pc, word);
+            sprintf(currentOut, "%9d: %d", pc, word);
             len += strlen(currentOut);
             printf(currentOut);
             printNextZero = 0;
@@ -350,7 +350,7 @@ void printMode(BOFFILE bof)
 
         else if (word != 0)
         {
-            sprintf(currentOut, "%8d: %d", pc, word);
+            sprintf(currentOut, "%9d: %d", pc, word);
             len += strlen(currentOut);
             printf(currentOut);
             printNextZero = 1;
@@ -365,7 +365,7 @@ void printMode(BOFFILE bof)
         pc++;
     }
 
-    sprintf(currentOut, "%8d: %d", pc, 0);
+    sprintf(currentOut, "%9d: %d", pc, 0);
     len += strlen(currentOut);
     printf(currentOut);
 
@@ -375,6 +375,8 @@ void printMode(BOFFILE bof)
     printf("%s", DATA_SEPARATOR);
 
     //printf("%s\n", currentOut);
+
+    newline(stdout);
 
     return;
 }
