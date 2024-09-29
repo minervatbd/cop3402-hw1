@@ -297,11 +297,11 @@ void printMode(BOFFILE bof)
 
     //reset file pointer to instruction start
     word_type pc = header.text_start_address;
-    fseek(bof.fileptr, pc + sizeof(header), SEEK_SET);
 
     printf("Address Instruction\n");
+    bin_instr_t in;
 
-    while (!bof_at_eof(bof))
+    while (pc < header.data_start_address)
     {
         printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
         pc++;
