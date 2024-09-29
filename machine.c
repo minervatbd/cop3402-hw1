@@ -300,13 +300,14 @@ void printMode(BOFFILE bof)
     //reset file pointer to instruction start
     word_type pc = header.text_start_address;
 
-    printf("Address Instruction\n");
+    instruction_print_table_heading(stdout);
     bin_instr_t in;
 
     // printing instructions
     while (pc < header.text_start_address + header.text_length)
     {
-        printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
+        //printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
+        instruction_print(stdout, pc, instruction_read(bof));
         pc++;
     }
 
