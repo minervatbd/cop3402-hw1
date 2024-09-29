@@ -4,7 +4,9 @@
 #include "regname.h"
 #include "stack.h"
 
+// TEMP VARS TODO
 Stack stack;
+union mem_u mainMemory;
 
 void add(bin_instr_t i)
 {
