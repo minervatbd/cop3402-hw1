@@ -4,6 +4,7 @@
 #include "instruction.h"
 #include "regname.h"
 #include "stack.h"
+#include <stdio.h>
 
 #include "instr_comp_0.h"
 #include "instr_comp_1.h"
@@ -32,7 +33,6 @@ void machine(int mode, char* inputFilename)
     {
         // read header
         BOFHeader header = bof_read_header(inFile);
-        fseek(inFile.fileptr, 0, SEEK_SET);
 
         //initalize stack
         Stack* stack = initalizeStack();
@@ -45,7 +45,7 @@ void machine(int mode, char* inputFilename)
 
         //2) parse instruction type
         instr_type type = instruction_type(instruction);
-
+        
         // big switch thing for every single type of instruction
         switch (instruction.comp.op) // pretending its a computer instruction to get opcode
         {
@@ -58,51 +58,51 @@ void machine(int mode, char* inputFilename)
                     break;
 
                 case ADD_F: // add
-                    add(instruction, &stack);
+                    add(instruction, stack);
                     break;
 
                 case SUB_F: // subtract
-                    subtract(instruction, &stack);
+                    subtract(instruction, stack);
                     break;
 
                 case CPW_F: // copy word
-                    copyWord(instruction, &stack);
+                    copyWord(instruction, stack);
                     break;
 
                 case AND_F: // bitwise and
-                    bitwiseAnd(instruction, &stack);
+                    bitwiseAnd(instruction, stack);
                     break;
 
                 case BOR_F: // bitwise or
-                    bitwiseOr(instruction, &stack);
+                    bitwiseOr(instruction, stack);
                     break;
 
                 case NOR_F: // bitwise not-or
-                    bitwiseNor(instruction, &stack);
+                    bitwiseNor(instruction, stack);
                     break;
 
                 case XOR_F: // bitwise x-or
-                    bitwiseXor(instruction, &stack);
+                    bitwiseXor(instruction, stack);
                     break;
 
                 case LWR_F: // load word into register
-                    loadWord(instruction, &stack);
+                    loadWord(instruction, stack);
                     break;
 
                 case SWR_F: // store word from register
-                    storeWord(instruction, &stack);
+                    storeWord(instruction, stack);
                     break;
 
                 case SCA_F: // store computed address
-                    storeAddr(instruction, &stack);
+                    storeAddr(instruction, stack);
                     break;
 
                 case LWI_F: // load word indirect
-                    loadWordIndirect(instruction, &stack);
+                    loadWordIndirect(instruction, stack);
                     break;
 
                 case NEG_F: // negate
-                    negate(instruction, &stack);
+                    negate(instruction, stack);
                     break;
 
                 break;
@@ -119,47 +119,47 @@ void machine(int mode, char* inputFilename)
             switch (instruction.comp.func) 
             {
                 case LIT_F: // literal (load)
-                    literalLoad(instruction, &stack);
+                    literalLoad(instruction, stack);
                     break;
 
                 case ARI_F: // add 
-                    addRegImmediate(instruction, &stack);
+                    addRegImmediate(instruction, stack);
                     break;
 
                 case SRI_F: // subtract register immediate
-                    subRegImmediate(instruction, &stack);
+                    subRegImmediate(instruction, stack);
                     break;
 
                 case MUL_F: // multiply
-                    multiply(instruction, &stack, &lo, &hi);
+                    multiply(instruction, stack, &lo, &hi);
                     break;
 
                 case DIV_F: // divide
-                    divide(instruction, &stack, &lo, &hi);
+                    divide(instruction, stack, &lo, &hi);
                     break;
 
                 case CFHI_F: // copy from HI
-                    copyHI(instruction, &stack, &hi);
+                    copyHI(instruction, stack, &hi);
                     break;
 
                 case CFLO_F: // copy from LO
-                    copyLO(instruction, &stack, &lo);
+                    copyLO(instruction, stack, &lo);
                     break;
 
                 case SLL_F: // shift left logical
-                    shiftLeftLogical(instruction, &stack);
+                    shiftLeftLogical(instruction, stack);
                     break;
 
                 case SRL_F: // shift right logical
-                    shiftRightLogical(instruction, &stack);
+                    shiftRightLogical(instruction, stack);
                     break;
 
                 case JMP_F: // jump
-                    jump(instruction, &stack, &pc);
+                    jump(instruction, stack, &pc);
                     break;
 
                 case CSI_F: // call subroutine indirectly
-                    callSubroutineIndirectly(instruction, &stack, &pc);
+                    callSubroutineIndirectly(instruction, stack, &pc);
                     break;
 
                 case JREL_F: // jump relative to address
@@ -210,47 +210,47 @@ void machine(int mode, char* inputFilename)
 
             // all the immediate instructions
             case ADDI_O: // add immediate
-                addImmed(instruction, &stack);
+                addImmed(instruction, stack);
                 break;
             
             case ANDI_O: // bitwise and immediate
-                andImmed(instruction, &stack);
+                andImmed(instruction, stack);
                 break;
             
             case BORI_O: // bitwise or immediate
-                borImmed(instruction, &stack);
+                borImmed(instruction, stack);
                 break;
             
             case NORI_O: // bitwise not-or immediate
-                norImmed(instruction, &stack);
+                norImmed(instruction, stack);
                 break;
 
             case XORI_O: // bitwise x-or immediate
-                xorImmed(instruction, &stack);
+                xorImmed(instruction, stack);
                 break;
 
             case BEQ_O: // branch on equal
-                branchOnEqual(instruction, &stack, &pc);
+                branchOnEqual(instruction, stack, &pc);
                 break;
 
             case BGEZ_O: // branch >= 0
-                branchGreaterEqualThanZero(instruction, &stack, &pc);
+                branchGreaterEqualThanZero(instruction, stack, &pc);
                 break;
 
             case BGTZ_O: // branch > 0
-                branchGreaterThanZero(instruction, &stack, &pc);
+                branchGreaterThanZero(instruction, stack, &pc);
                 break;
 
             case BLEZ_O: // branch <= 0
-                branchLessEqualThanZero(instruction, &stack, &pc);
+                branchLessEqualThanZero(instruction, stack, &pc);
                 break;
 
             case BLTZ_O: // branch < 0
-                branchLessThanZero(instruction, &stack, &pc);
+                branchLessThanZero(instruction, stack, &pc);
                 break;
 
             case BNE_O: // branch not equal
-                branchNotEqual(instruction, &stack, &pc);
+                branchNotEqual(instruction, stack, &pc);
                 break;
 
             // jump format instructions
@@ -259,11 +259,11 @@ void machine(int mode, char* inputFilename)
                 break;
 
             case CALL_O: // call subroutine
-                callSubroutine(instruction, &stack, &pc);
+                callSubroutine(instruction, stack, &pc);
                 break;
 
             case RTN_O: // return from subroutine
-                returnFromSubroutine(instruction, &stack, &pc);
+                returnFromSubroutine(instruction, stack, &pc);
                 break;
 
             // error
@@ -294,12 +294,9 @@ void printMode(BOFFILE bof)
 {
     // read header
     BOFHeader header = bof_read_header(bof);
-
-    //reset file pointer to instruction start
     word_type pc = header.text_start_address;
 
     printf("Address Instruction\n");
-    bin_instr_t in;
 
     while (pc < header.data_start_address)
     {
