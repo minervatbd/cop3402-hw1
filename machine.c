@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "bof.h"
 #include "utilities.h"
 #include "machine_types.h"
@@ -322,6 +324,8 @@ void printMode(BOFFILE bof)
     // if a zero is printed, dont print any zeros after that.
     int printNextZero = 1;
 
+    char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH*2);
+
     // data section start
     while (pc < header.data_start_address + header.data_length)
     {
@@ -329,30 +333,33 @@ void printMode(BOFFILE bof)
 
         if (word == 0 && printNextZero == 1)
         {
-            printf("%d: %d     ", pc, word);
+            sprintf(currentOut, "%8d: %d", pc, word);
             printNextZero = 0;
         }
             
         else if (word == 0 && printNextZero == 0)
         {
-            printf("%s", DATA_SEPARATOR);
+            sprintf(currentOut, DATA_SEPARATOR);
             printNextZero = -1;
         }
 
         else if (word != 0)
         {
-            printf("%d: %d     ", pc, word);
+            sprintf(currentOut, "%8d: %d", pc, word);
             printNextZero = 1;
         }
 
-        if (len > MAX_DATA_LINE_LENGTH)
+        if (strlen(currentOut) > MAX_DATA_LINE_LENGTH)
         {
-            len = 0;
-            printf("\n");
+            printf("%s\n", currentOut);
+            currentOut = "";
         }
 
         pc++;
     }
+    //sprintf(currentOut, "%8d: 0%s");
+
+    printf("%s\n", currentOut);
 
     return;
 }
