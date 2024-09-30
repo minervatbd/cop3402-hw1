@@ -42,7 +42,7 @@ int stopTrace(){
 
 void traceInstrPrint(bin_instr_t i, address_type* pc)
 {
-    fprintf(stdout, "\t%d:%s%8s\n", *pc, TRACE_INSTR_PREFIX, instruction_assembly_form(*pc, i));
+    fprintf(stdout, "\t%s%d:%8s\n", TRACE_INSTR_PREFIX, *pc, instruction_assembly_form(*pc, i));
 }
 
 void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* stack)
