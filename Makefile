@@ -15,7 +15,7 @@ ZIP = zip -9
 VM_OBJECTS = machine_main.o machine.o stack.o \
              machine_types.o instruction.o bof.o \
              regname.o utilities.o \
-			 instr_comp_0.o instr_comp_1.o instr_immed.o instr_jump.o \
+			 instr_comp_0.o instr_comp_1.o instr_immed.o instr_jump.o instr_syscall.o\
 			 
 TESTS = vm_test0.bof vm_test1.bof vm_test2.bof vm_test3.bof \
 	vm_test4.bof vm_test5.bof vm_test6.bof vm_test7.bof \
