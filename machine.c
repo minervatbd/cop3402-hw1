@@ -304,12 +304,12 @@ void machine(int mode, char* inputFilename)
 
 void init(BOFHeader header, Stack* stack, address_type* pc, uword_type* hi, uword_type* lo)
 {
-    // set $gp to header data start address 
-    stack->GPR[GP] = header.data_start_address;
+    // set $gp to header data start address (-1 because of zero indexing)
+    stack->GPR[GP] = header.data_start_address - 1;
 
-    // set $sp and $fp to bottom of stack address, must be strictly greater than data start address
-    stack->GPR[SP] = header.stack_bottom_addr;
-    stack->GPR[FP] = header.stack_bottom_addr;
+    // set $sp and $fp to bottom of stack address, must be strictly greater than data start address (-1 because of zero indexing)
+    stack->GPR[SP] = header.stack_bottom_addr - 1;
+    stack->GPR[FP] = header.stack_bottom_addr - 1;
 
     // set pc to text address start, hi/lo to zero
     *pc = header.text_start_address;
