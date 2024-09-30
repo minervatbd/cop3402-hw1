@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "machine_types.h"
+#include "utilities.h"
 #include "machine.h"
 #include "regname.h"
 #include "stack.h"
@@ -55,12 +56,13 @@ word_type peek(Stack* stack){
 }
 
 
-void addAR(Stack* stack, word_type AR){
-    stack->stackMemory->words[stack->GPR[FP]] = AR;
+void addAR(Stack* stack, unsigned int numWords){
+    if(!numWords) bail_with_error("Tried to allocate an AR with 0 words");
+
     if(stackOkay(stack)!=2){
         for(int i= stack->GPR[SP] - stack->topOffset; i < stack->GPR[SP]; i--)
             stack->stackMemory->words[i-1] = stack->stackMemory->words[i];
-    } 
+    } else return;
 
     stack->GPR[SP]--;
     stack->GPR[FP]--;
@@ -68,7 +70,7 @@ void addAR(Stack* stack, word_type AR){
     return;
 }
 
-void subAR(Stack* stack){
+void subAR(Stack* stack, unsigned int numWords){
     stack->stackMemory->words[stack->GPR[FP]] = 0;
     for(int i= stack->GPR[SP]; i > stack->GPR[SP] - stack->topOffset; i--)
         stack->stackMemory->words[i+1] = stack->stackMemory->words[i];

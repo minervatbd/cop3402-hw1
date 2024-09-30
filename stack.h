@@ -30,8 +30,8 @@ extern void pop(Stack* stack);
 extern word_type peek(Stack* stack);
 
 //AR operations
-extern void addAR(Stack* stack, word_type AR);
-extern void subAR(Stack* stack);
+extern void addAR(Stack* stack, unsigned int numWords);
+extern void subAR(Stack* stack, unsigned int numWords);
 extern void allocateSpace(Stack* stack);
 extern void deallocate(Stack* stack);
 

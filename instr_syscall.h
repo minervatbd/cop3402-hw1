@@ -1,0 +1,19 @@
+#ifndef _INSTR_SYSCALL_H
+#define _INSTR_SYSCALL_H
+
+#include "machine.h"
+#include "instruction.h"
+
+#define TRACE_INSTR_PREFIX "==>"
+#define PC_PRINT "PC"
+#define GPR_PRINT "GPR"
+
+// comp format functions
+extern void exitProgam(bin_instr_t i);
+extern void printString(bin_instr_t i, Stack stack);
+extern void printChar(bin_instr_t i, Stack stack);
+extern void readChar(bin_instr_t i, Stack stack);
+extern void traceInstrPrint(bin_instr_t i, address_type* pc);
+extern void traceStatePrint(bin_instr_t i);
+
+#endif
