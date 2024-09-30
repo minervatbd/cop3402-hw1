@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "bof.h"
 #include "utilities.h"
 #include "machine_types.h"
@@ -301,13 +303,83 @@ void printMode(BOFFILE bof)
     BOFHeader header = bof_read_header(bof);
     word_type pc = header.text_start_address;
 
-    printf("Address Instruction\n");
+    instruction_print_table_heading(stdout);
+    bin_instr_t in;
 
-    while (pc < header.data_start_address)
+    // printing instructions
+    while (pc < header.text_start_address + header.text_length)
     {
-        printf("%d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
+        printf("%6d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
+        //instruction_print(stdout, pc, instruction_read(bof));
         pc++;
     }
+
+    //printf("\n\nData section\n\n");
+
+    // jump to data start address
+    pc = header.data_start_address;
+
+    // current word
+    word_type word;
+
+    // current line length
+    int len = 0;
+
+    // if a zero is printed, dont print any zeros after that.
+    int printNextZero = 1;
+
+    char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH*2);
+
+    // data section start
+    while (pc < header.data_start_address + header.data_length)
+    {
+        word = bof_read_word(bof);
+
+        if (word == 0 && printNextZero == 1)
+        {
+            sprintf(currentOut, "%8d: %d", pc, word);
+            len += strlen(currentOut);
+            printf(currentOut);
+            printNextZero = 0;
+        }
+            
+        else if (word == 0 && printNextZero == 0)
+        {
+            sprintf(currentOut, DATA_SEPARATOR);
+            len += strlen(currentOut);
+            printf(currentOut);
+            printNextZero = -1;
+        }
+
+        else if (word != 0)
+        {
+            sprintf(currentOut, "%8d: %d", pc, word);
+            len += strlen(currentOut);
+            printf(currentOut);
+            printNextZero = 1;
+        }
+
+        if (len > MAX_DATA_LINE_LENGTH)
+        {
+            newline(stdout);
+            len = 0;
+        }
+
+        pc++;
+    }
+
+    sprintf(currentOut, "%8d: %d", pc, 0);
+    len += strlen(currentOut);
+    printf(currentOut);
+
+    if (len > MAX_DATA_LINE_LENGTH)
+        newline(stdout);
+
+    printf("%s", DATA_SEPARATOR);
+
+    //printf("%s\n", currentOut);
+
+    newline(stdout);
 
     return;
 }
