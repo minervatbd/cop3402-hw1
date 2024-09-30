@@ -12,6 +12,7 @@
 #include "instr_comp_1.h"
 #include "instr_immed.h"
 #include "instr_jump.h"
+#include "instr_syscall.h"
 
 
 void machine(int mode, char* inputFilename)
@@ -61,7 +62,9 @@ void machine(int mode, char* inputFilename)
             //parse instruction type (execution loop)
             instr_type type = instruction_type(currInstr);
     
-        
+            //trace instruction 
+            if(tracingBool)
+                traceInstrPrint(currInstr, &pc);
         
             // big switch thing for every single type of instruction
             switch (currInstr.comp.op) // pretending its a computer instruction to get opcode
@@ -288,6 +291,10 @@ void machine(int mode, char* inputFilename)
                 
                 break;
             }
+
+            //trace machine state
+            if(tracingBool)
+                traceStatePrint(currInstr, &pc, &hi, &lo, stack);
         }
     }
 }

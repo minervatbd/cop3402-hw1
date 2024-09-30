@@ -8,29 +8,28 @@
 #include "utilities.h"
 
 //TODO implement startTracing and stopTracing func
-union mem_u tempMemSys;
 
 void exitProgam(bin_instr_t i)
 {
     exit(machine_types_sgnExt(i.syscall.offset));
 }
 
-void printString(bin_instr_t i, Stack stack)
+void printString(bin_instr_t i, Stack* stack)
 {
-    tempMemSys.words[stack.GPR[SP]] = printf("%s", &tempMemSys.words[stack.GPR[i.syscall.reg] + 
+    stack->stackMemory->words[stack->GPR[SP]] = printf("%s", stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
     machine_types_formOffset(i.syscall.offset)]);
 }
 
-void printChar(bin_instr_t i,  Stack stack)
+void printChar(bin_instr_t i,  Stack* stack)
 {
-    tempMemSys.words[stack.GPR[SP]] = fputc(tempMemSys.words[stack.GPR[i.syscall.reg] + 
+    stack->stackMemory->words[stack->GPR[SP]] = fputc(stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
     machine_types_formOffset(i.syscall.offset)], stdout);
 }
 
 
-void readChar(bin_instr_t i, Stack stack)
+void readChar(bin_instr_t i, Stack* stack)
 {
-    tempMemSys.words[stack.GPR[i.syscall.reg] + machine_types_formOffset(i.syscall.offset)] = getc(stdin);
+    stack->stackMemory->words[stack->GPR[i.syscall.reg] + machine_types_formOffset(i.syscall.offset)] = getc(stdin);
 }
 
 void traceInstrPrint(bin_instr_t i, address_type* pc)
@@ -38,7 +37,7 @@ void traceInstrPrint(bin_instr_t i, address_type* pc)
     fprintf(stdout, "%s%8s\n", TRACE_INSTR_PREFIX, instruction_assembly_form(pc, i));
 }
 
-void traceStatePrint(bin_instr_t i, address_type* pc, Stack* stack)
+void traceStatePrint(bin_instr_t i, address_type* pc, uword_type* hi, uword_type* lo, Stack* stack)
 {
     fprintf(stdout, "%8s: %d\n", PC_PRINT, pc);
     for(int c = 0; c <= RA; c++)
