@@ -39,10 +39,15 @@ void machine(int mode, char* inputFilename)
         // initialize registers using header data
         init(header, stack);
 
-        //1) read word in
-        bin_instr_t instruction = instruction_read(inFile);
+        //1) read word in (storing in memory loop)
+        bin_instr_t instruction;
+        for(int i= pc; i < header.text_length + pc; i++){
+            instruction = instruction_read(inFile);
+            stack->stackMemory->instrs[i] = instruction;
+        }
+        
 
-        //2) parse instruction type
+        //2) parse instruction type (execution loop)
         instr_type type = instruction_type(instruction);
         
         // big switch thing for every single type of instruction
