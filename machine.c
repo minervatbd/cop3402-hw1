@@ -402,6 +402,8 @@ void printMode(BOFFILE bof)
 
     newline(stdout);
 
+    free(currentOut);
+
     return;
 }
 
