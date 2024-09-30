@@ -49,6 +49,10 @@ void machine(int mode, char* inputFilename)
         for(int i= 0; i < numInstrs; i++)
             instructions[i] = instruction_read(inFile);  
         
+        //read data into memory
+        for(int j = stack->GPR[GP]; j < stack->GPR[GP] + header.data_length; j++)
+            stack->stackMemory->words[j] = bof_read_word(inFile);
+
         //beign instruction cycle and declare vars needed for invariant check and tracing
         bin_instr_t currInstr;
         //tracing is on by default

@@ -6,7 +6,9 @@
 
 void addImmed(bin_instr_t i, Stack* stack)
 {
-	stack->stackMemory->words[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] =  
+	//debug temp
+	printf("register: %u\n", i.immed.reg);
+	stack->stackMemory->words[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] = (word_type)
 	stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] + machine_types_sgnExt(i.immed.immed);
 }
 
