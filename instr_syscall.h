@@ -16,6 +16,6 @@ extern void readChar(bin_instr_t i, Stack* stack);
 extern int startTrace();
 extern int stopTrace();
 extern void traceInstrPrint(bin_instr_t i, address_type* pc);
-extern void traceStatePrint(bin_instr_t i, address_type* pc, uword_type* hi, uword_type* lo, Stack* stack);
+extern void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* stack);
 
 #endif
