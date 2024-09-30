@@ -5,6 +5,8 @@
 #include "instruction.h"
 
 #define TRACE_INSTR_PREFIX "==>"
+#define PC_PRINT "PC"
+#define GPR_PRINT "GPR"
 
 // comp format functions
 extern void exitProgam(bin_instr_t i);

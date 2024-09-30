@@ -5,6 +5,7 @@
 #include "machine_types.h"
 #include "regname.h"
 #include "stack.h"
+#include "utilities.h"
 
 //TODO implement startTracing and stopTracing func
 union mem_u tempMemSys;
@@ -37,7 +38,18 @@ void traceInstrPrint(bin_instr_t i, address_type* pc)
     fprintf(stdout, "%s%8s\n", TRACE_INSTR_PREFIX, instruction_assembly_form(pc, i));
 }
 
-void traceStatePrint(bin_instr_t i)
+void traceStatePrint(bin_instr_t i, address_type* pc, Stack* stack)
 {
-
+    fprintf(stdout, "%8s: %d\n", PC_PRINT, pc);
+    for(int c = 0; c <= RA; c++)
+    {
+        if (c == 5)
+            newline(stdout);
+        
+        fprintf(stdout, "%s[%s]: %-6d", GPR_PRINT, regname_get(c), stack->GPR[c]);
+    }
+    newline(stdout);
+    
+    fprintf(stdout, "");
+    // data section TODO
 }
