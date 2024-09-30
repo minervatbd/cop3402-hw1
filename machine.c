@@ -183,46 +183,45 @@ void machine(int mode, char* inputFilename)
                         break;
 
                     case JREL_F: // jump relative to address
-
+                        jumpRelative(currInstr, &pc);
                     // system calls, another nested switch
                     case SYS_F:
+                        switch (currInstr.syscall.code)
+                        {
+                            case exit_sc: // exit
+                                exitProgam(currInstr);
+                            break;
 
-                    switch (currInstr.syscall.code)
-                    {
-                        case exit_sc: // exit
+                            case print_str_sc: // print string
+                                printString(currInstr, stack);
+                            break;
 
-                        break;
+                            case print_char_sc: // print char
+                                printChar(currInstr, stack);
+                            break;
 
-                        case print_str_sc: // print string
+                            case read_char_sc: // get char
+                                readChar(currInstr, stack);
+                            break;
 
-                        break;
+                            case start_tracing_sc: // start vm tracing output
+                                tracingBool = startTrace();
+                            break;
 
-                        case print_char_sc: // print char
+                            case stop_tracing_sc: // no vm tracing
+                                tracingBool = stopTrace();
+                            break;
 
-                        break;
-
-                        case read_char_sc: // get char
-
-                        break;
-
-                        case start_tracing_sc: // start vm tracing output
-
-                        break;
-
-                        case stop_tracing_sc: // no vm tracing
-
-                        break;
-
-                        // error
-                        default:
-
-                        break;
-                    }
+                            // error
+                            default:
+                                fprintf(stderr, "\n *Error*: could not parse instruction correctly (syscall op code)\n");
+                            break;
+                        }
                     break;
 
                     // error
                     default:
-
+                        fprintf(stderr, "\n *Error*: could not parse instruction correctly (comp function code)\n");
                     break;
                 }
 
@@ -288,7 +287,7 @@ void machine(int mode, char* inputFilename)
 
                 // error
                 default:
-                
+                    fprintf(stderr, "\n *Error*: could not parse instruction correctly (j/i-type op code)\n");
                 break;
             }
 

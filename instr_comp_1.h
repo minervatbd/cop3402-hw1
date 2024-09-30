@@ -15,6 +15,7 @@ extern void copyLO(bin_instr_t i, Stack* stack, uword_type* lo);
 extern void shiftLeftLogical(bin_instr_t i, Stack* stack);
 extern void shiftRightLogical(bin_instr_t i, Stack* stack);
 extern void jump(bin_instr_t i, Stack* stack, address_type* pc);
+extern void jumpRelative(bin_instr_t i, address_type* pc);
 extern void callSubroutineIndirectly(bin_instr_t i, Stack* stack, address_type* pc);
 
 #endif
