@@ -61,6 +61,10 @@ void jump(bin_instr_t i, Stack* stack, address_type* pc)
     *pc = stack->stackMemory->uwords[stack->GPR[i.othc.reg] + machine_types_formOffset(i.othc.offset)];    
 }
 
+void jumpRelative(bin_instr_t i,  address_type* pc){
+    *pc = (*pc - 1) + i.othc.offset;
+}
+
 void callSubroutineIndirectly(bin_instr_t i, Stack* stack, address_type* pc)
 {
     stack->GPR[RA] = *pc;

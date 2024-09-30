@@ -12,13 +12,14 @@
 #include "instr_comp_1.h"
 #include "instr_immed.h"
 #include "instr_jump.h"
+#include "instr_syscall.h"
 
 
 void machine(int mode, char* inputFilename)
 {
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
-
+    printf("%d\n", mode);
     // -p has been passed, print mode function
     if (mode)
     {
@@ -61,7 +62,9 @@ void machine(int mode, char* inputFilename)
             //parse instruction type (execution loop)
             instr_type type = instruction_type(currInstr);
     
-        
+            //trace instruction 
+            if(tracingBool)
+                traceInstrPrint(currInstr, &pc);
         
             // big switch thing for every single type of instruction
             switch (currInstr.comp.op) // pretending its a computer instruction to get opcode
@@ -180,46 +183,45 @@ void machine(int mode, char* inputFilename)
                         break;
 
                     case JREL_F: // jump relative to address
-
+                        jumpRelative(currInstr, &pc);
                     // system calls, another nested switch
                     case SYS_F:
+                        switch (currInstr.syscall.code)
+                        {
+                            case exit_sc: // exit
+                                exitProgam(currInstr);
+                            break;
 
-                    switch (currInstr.syscall.code)
-                    {
-                        case exit_sc: // exit
+                            case print_str_sc: // print string
+                                printString(currInstr, stack);
+                            break;
 
-                        break;
+                            case print_char_sc: // print char
+                                printChar(currInstr, stack);
+                            break;
 
-                        case print_str_sc: // print string
+                            case read_char_sc: // get char
+                                readChar(currInstr, stack);
+                            break;
 
-                        break;
+                            case start_tracing_sc: // start vm tracing output
+                                tracingBool = startTrace();
+                            break;
 
-                        case print_char_sc: // print char
+                            case stop_tracing_sc: // no vm tracing
+                                tracingBool = stopTrace();
+                            break;
 
-                        break;
-
-                        case read_char_sc: // get char
-
-                        break;
-
-                        case start_tracing_sc: // start vm tracing output
-
-                        break;
-
-                        case stop_tracing_sc: // no vm tracing
-
-                        break;
-
-                        // error
-                        default:
-
-                        break;
-                    }
+                            // error
+                            default:
+                                fprintf(stderr, "\n *Error*: could not parse instruction correctly (syscall op code)\n");
+                            break;
+                        }
                     break;
 
                     // error
                     default:
-
+                        fprintf(stderr, "\n *Error*: could not parse instruction correctly (comp function code)\n");
                     break;
                 }
 
@@ -285,9 +287,13 @@ void machine(int mode, char* inputFilename)
 
                 // error
                 default:
-                
+                    fprintf(stderr, "\n *Error*: could not parse instruction correctly (j/i-type op code)\n");
                 break;
             }
+
+            //trace machine state
+            if(tracingBool)
+                traceStatePrint(&pc, &hi, &lo, stack);
         }
     }
 }
@@ -304,6 +310,9 @@ void init(BOFHeader header, Stack* stack, address_type* pc, uword_type* hi, uwor
     // set pc to text address start, hi/lo to zero
     *pc = header.text_start_address;
     *hi, *lo = 0;
+
+    //initial trace
+    traceStatePrint(pc, hi, lo, stack);
 
     return;
 }
