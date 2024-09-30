@@ -32,6 +32,14 @@ void readChar(bin_instr_t i, Stack* stack)
     stack->stackMemory->words[stack->GPR[i.syscall.reg] + machine_types_formOffset(i.syscall.offset)] = getc(stdin);
 }
 
+int startTrace(){
+    return 1;
+}
+
+int stopTrace(){
+    return 0;
+}
+
 void traceInstrPrint(bin_instr_t i, address_type* pc)
 {
     fprintf(stdout, "%s%8s\n", TRACE_INSTR_PREFIX, instruction_assembly_form(pc, i));

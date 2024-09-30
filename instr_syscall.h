@@ -10,9 +10,11 @@
 
 // comp format functions
 extern void exitProgam(bin_instr_t i);
-extern void printString(bin_instr_t i, Stack* tack);
+extern void printString(bin_instr_t i, Stack* stack);
 extern void printChar(bin_instr_t i, Stack* stack);
 extern void readChar(bin_instr_t i, Stack* stack);
+extern int startTrace();
+extern int stopTrace();
 extern void traceInstrPrint(bin_instr_t i, address_type* pc);
 extern void traceStatePrint(bin_instr_t i, address_type* pc, uword_type* hi, uword_type* lo, Stack* stack);
 
