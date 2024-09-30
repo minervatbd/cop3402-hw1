@@ -19,7 +19,7 @@ void machine(int mode, char* inputFilename)
 {
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
-
+    print("%d\n", mode);
     // -p has been passed, print mode function
     if (mode)
     {
