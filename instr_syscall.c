@@ -106,7 +106,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         //initiate skipping and print ellipses
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && doubleZeros)
         {
-            sprintf(currentOut, "%8s", DATA_SEPARATOR);
+            sprintf(currentOut, "%16s", DATA_SEPARATOR);
             len += strlen(currentOut);
             printf("%s", currentOut);
             hasSkippedAhead = 1;
