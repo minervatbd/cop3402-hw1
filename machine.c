@@ -395,7 +395,7 @@ void printMode(BOFFILE bof)
         pc++;
     }
 
-    if (printNextZero)
+    if (printNextZero == 1)
     {
         sprintf(currentOut, "%8d: %d", pc, 0);
         len += strlen(currentOut);
