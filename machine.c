@@ -319,9 +319,6 @@ void init(BOFHeader header, Stack* stack, address_type* pc, uword_type* hi, uwor
     *pc = header.text_start_address;
     *hi, *lo = 0;
 
-    //initial trace
-    traceStatePrint(pc, hi, lo, stack);
-
     return;
 }
 
