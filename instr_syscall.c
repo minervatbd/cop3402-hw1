@@ -81,12 +81,16 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         if(hasSkippedAhead && doubleZeros && stack->stackMemory->words[b] == 0 && b < stack->GPR[SP])
             continue;
 
-        //line breaks
-        if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP])
+        //line breaks and reset for stack memory
+        if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP]){
             len = resetLen(len);
+            hasSkippedAhead = 0;
+            doubleZeros = 0;
+        }
+            
         
-        // always print if its not a zero value or on the stack
-        if (stack->stackMemory->words[b] != 0 || b >= stack->GPR[SP])
+        // always print if its not a zero value
+        if (stack->stackMemory->words[b] != 0)
         {
             doubleZeros = 0;
             hasSkippedAhead = 0;
