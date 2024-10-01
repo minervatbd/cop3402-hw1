@@ -65,11 +65,12 @@ void machine(int mode, char* inputFilename)
         while(invariantCheck(stack, pc)){
             //fetch instruction
             currInstr = instructions[pc];
-            pc++;
-
             //trace instruction 
             if(tracingBool)
                 traceInstrPrint(currInstr, &pc);
+
+            //update pc
+            pc++;
         
             // big switch thing for every single type of instruction
             switch (currInstr.comp.op) // pretending its a computer instruction to get opcode
