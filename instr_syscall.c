@@ -95,23 +95,17 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             doubleZeros = 0;
             hasSkippedAhead = 0;
 
-            sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
-            len += strlen(currentOut);
-            printf("%s", currentOut);
+            len = stdPrint(&currentOut, b, stack->stackMemory->words[b]);
         } 
         // first time we hit a 0
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && !doubleZeros)
         {
-            sprintf(currentOut, "%8d: %-6d", b, 0);
-            len += strlen(currentOut);
-            printf("%s", currentOut);
-
-            doubleZeros = 1;
+            len = stdPrint(&currentOut, b, 0);
+            doubleZeros =  1;
         }
         //initiate skipping and print ellipses
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && doubleZeros)
         {
-
             sprintf(currentOut, "%8s", DATA_SEPARATOR);
             len += strlen(currentOut);
             printf("%s", currentOut);
@@ -128,4 +122,10 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 static int resetLen(int len){
     newline(stdout);
     return 0;
+}
+
+static int stdPrint(char** currentOut, int adr, word_type instr){
+    sprintf(*currentOut, "%8d: %-6d", adr, instr);
+    printf("%s", *currentOut);
+    return strlen(currentOut);
 }
