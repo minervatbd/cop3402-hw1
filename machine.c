@@ -55,7 +55,7 @@ void machine(int mode, char* inputFilename)
             stack->stackMemory->words[j] = bof_read_word(inFile);
 
         //initial trace
-        traceStatePrint(pc, hi, lo, stack);
+        traceStatePrint(&pc, &hi, &lo, stack);
 
         //beign instruction cycle and declare vars needed for invariant check and tracing
         bin_instr_t currInstr;
