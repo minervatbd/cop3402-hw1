@@ -19,7 +19,7 @@ extern int startTrace();
 extern int stopTrace();
 extern void traceInstrPrint(bin_instr_t i, address_type* pc);
 extern void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* stack);
-static int resetLen(int len);
+static int resetLen();
 static int stdPrint(char** currentOut, int adr, word_type instr);
 
 #endif
