@@ -16,7 +16,7 @@ void exitProgam(bin_instr_t i)
 
 void printString(bin_instr_t i, Stack* stack)
 {
-    stack->stackMemory->words[stack->GPR[SP]] = printf("%s", &stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
+    stack->stackMemory->words[stack->GPR[SP]] = printf("%s", (char*) &stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
     machine_types_formOffset(i.syscall.offset)]);
 }
 
@@ -131,5 +131,5 @@ static int resetLen(){
 static int stdPrint(char** currentOut, int adr, word_type instr){
     sprintf(*currentOut, "%8d: %-6d", adr, instr);
     printf("%s", *currentOut);
-    return strlen(currentOut);
+    return strlen(*currentOut);
 }
