@@ -7,6 +7,7 @@
 #include "regname.h"
 #include "stack.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "instr_comp_0.h"
 #include "instr_comp_1.h"
@@ -49,6 +50,10 @@ void machine(int mode, char* inputFilename)
         for(int i= 0; i < numInstrs; i++)
             instructions[i] = instruction_read(inFile);  
         
+        //read data into memory
+        for(int j = stack->GPR[GP]; j < stack->GPR[GP] + header.data_length; j++)
+            stack->stackMemory->words[j] = bof_read_word(inFile);
+
         //beign instruction cycle and declare vars needed for invariant check and tracing
         bin_instr_t currInstr;
         //tracing is on by default
@@ -300,12 +305,12 @@ void machine(int mode, char* inputFilename)
 
 void init(BOFHeader header, Stack* stack, address_type* pc, uword_type* hi, uword_type* lo)
 {
-    // set $gp to header data start address 
-    stack->GPR[GP] = header.data_start_address;
+    // set $gp to header data start address (-1 because of zero indexing)
+    stack->GPR[GP] = header.data_start_address - 1;
 
-    // set $sp and $fp to bottom of stack address, must be strictly greater than data start address
-    stack->GPR[SP] = header.stack_bottom_addr;
-    stack->GPR[FP] = header.stack_bottom_addr;
+    // set $sp and $fp to bottom of stack address, must be strictly greater than data start address (-1 because of zero indexing)
+    stack->GPR[SP] = header.stack_bottom_addr - 1;
+    stack->GPR[FP] = header.stack_bottom_addr - 1;
 
     // set pc to text address start, hi/lo to zero
     *pc = header.text_start_address;

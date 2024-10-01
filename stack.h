@@ -5,7 +5,7 @@
 
 #define STACK_HEIGHT 4096
 
-//stack that grows upward (as opposed to downward example provided in class)
+//stack struct
 typedef struct{
     int topOffset;
     union mem_u* stackMemory;
