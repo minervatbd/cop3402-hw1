@@ -93,7 +93,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
             sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
         }
 
         // this is the whole long thing that we do for the first time we hit a 0
@@ -101,7 +101,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         {
             sprintf(currentOut, "%8d: %-6d", b, 0);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
 
             doubleZeros = 1;
         }
@@ -111,7 +111,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
             sprintf(currentOut, "%8s", DATA_SEPARATOR);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
 
             if (len > MAX_DATA_LINE_LENGTH)
             {
@@ -126,7 +126,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             {
                 sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
                 len += strlen(currentOut);
-                printf(currentOut);
+                printf("%s", currentOut);
             }
 
             b++;
@@ -141,7 +141,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         {
             sprintf(currentOut, "%8d: %-6d", b, 0);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
 
             printNextZero = 0;
         }
@@ -151,7 +151,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         {
             sprintf(currentOut, "%s", DATA_SEPARATOR);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
 
             printNextZero = -1;
         }
