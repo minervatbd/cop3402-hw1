@@ -36,41 +36,41 @@ void xorImmed(bin_instr_t i, Stack* stack)
 void branchOnEqual(bin_instr_t i, Stack* stack, address_type* pc)
 {
 	if(stack->stackMemory->uwords[stack->GPR[SP]] == stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)]) {
-    	*pc = (*pc -1) + machine_types_formOffset(i.immed.immed);
+    	*pc = (address_type) (*pc - 1) + machine_types_formOffset(i.immed.immed);
 	}
 }
 
 void branchGreaterEqualThanZero(bin_instr_t i, Stack* stack, address_type* pc)
 {
 	if(stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] >= 0){
-    	*pc = (*pc -1) + machine_types_formOffset(i.immed.immed);
+    	*pc = (address_type) (*pc -1) + machine_types_formOffset(i.immed.immed);
 	}
 }
 
 void branchGreaterThanZero(bin_instr_t i, Stack* stack, address_type* pc)
 {
 	if(stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] > 0){
-    	*pc = (*pc -1) + machine_types_formOffset(i.immed.immed);
+    	*pc = (address_type) (*pc -1) + machine_types_formOffset(i.immed.immed);
 	}
 }
 
 void branchLessEqualThanZero(bin_instr_t i, Stack* stack, address_type* pc)
 {
 	if(stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] <= 0){
-    	*pc = (*pc -1) + machine_types_formOffset(i.immed.immed);
+    	*pc = (address_type) (*pc -1) + machine_types_formOffset(i.immed.immed);
 	}
 }
 
 void branchLessThanZero(bin_instr_t i, Stack* stack, address_type* pc)
 {
 	if(stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)] < 0){
-    	*pc = (*pc -1) + machine_types_formOffset(i.immed.immed);
+    	*pc = (address_type) (*pc -1) + machine_types_formOffset(i.immed.immed);
 	}
 }
 
 void branchNotEqual(bin_instr_t i, Stack* stack, address_type* pc)
 {   
 	if(stack->stackMemory->uwords[stack->GPR[SP]] != stack->stackMemory->uwords[stack->GPR[i.immed.reg] + machine_types_formOffset(i.immed.offset)]){
-    	*pc = (*pc -1) + machine_types_formOffset(i.immed.immed);
+    	*pc = (address_type) (*pc - 1) + machine_types_formOffset(i.immed.immed);
 	}
 }
