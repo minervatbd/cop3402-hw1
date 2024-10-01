@@ -20,7 +20,7 @@ void machine(int mode, char* inputFilename)
 {
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
-    printf("%d\n", mode);
+    
     // -p has been passed, print mode function
     if (mode)
     {
@@ -317,7 +317,7 @@ void init(BOFHeader header, Stack* stack, address_type* pc, uword_type* hi, uwor
 
     // set pc to text address start, hi/lo to zero
     *pc = header.text_start_address;
-    *hi, *lo = 0;
+    *hi = 0, *lo = 0;
 
     return;
 }
