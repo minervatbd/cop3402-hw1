@@ -75,6 +75,8 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
     int hasSkippedAhead = 0;
 
+    int doubleZeros = 0;
+
     char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH*2);
 
     for (int b = stack->GPR[GP]; b <= stack->GPR[FP]; b++) 
@@ -89,6 +91,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         if (stack->stackMemory->words[b] != 0)
         {
             printNextZero = 1;
+            doubleZeros = 0;
 
             sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
             len += strlen(currentOut);
@@ -96,17 +99,17 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         }
 
         // this is the whole long thing that we do for the first time we hit a 0
-        else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead)
+        else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && !doubleZeros)
         {
             sprintf(currentOut, "%8d: %-6d", b, 0);
             len += strlen(currentOut);
             printf(currentOut);
 
-            if (len > MAX_DATA_LINE_LENGTH)
-            {
-                newline(stdout);
-                len = 0;
-            }
+            doubleZeros = 1;
+        }
+
+        else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && doubleZeros)
+        {
 
             sprintf(currentOut, "%8s", DATA_SEPARATOR);
             len += strlen(currentOut);
