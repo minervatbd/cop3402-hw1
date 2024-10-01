@@ -83,7 +83,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
         //line breaks and reset for stack memory
         if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP]){
-            len = resetLen(len);
+            len = resetLen();
             hasSkippedAhead = 0;
             doubleZeros = 0;
         }
@@ -106,7 +106,10 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         //initiate skipping and print ellipses
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && doubleZeros)
         {
-            sprintf(currentOut, "%16s", DATA_SEPARATOR);
+            sprintf(currentOut, "%s", DATA_SEPARATOR);
+            if(strLen(currentOut) > MAX_DATA_LINE_LENGTH)
+                len = resetLen();
+                
             len += strlen(currentOut);
             printf("%s", currentOut);
             hasSkippedAhead = 1;
@@ -119,7 +122,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
     free(currentOut);
 }
 
-static int resetLen(int len){
+static int resetLen(){
     newline(stdout);
     return 0;
 }
