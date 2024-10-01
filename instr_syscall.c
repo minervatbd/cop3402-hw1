@@ -80,17 +80,20 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
     for (int b = stack->GPR[GP]; b <= stack->GPR[FP]; b++) 
     {
         if (len > MAX_DATA_LINE_LENGTH)
-        {
-            newline(stdout);
-            len = 0;
-        }
+            len = resetLen(len);
         
         // always print if its not a zero value or on the stack
-        if (stack->stackMemory->words[b] != 0 || b >= stack->GPR[SP])
+        if (stack->stackMemory->words[b] != 0)
         {
             printNextZero = 1;
             doubleZeros = 0;
 
+            sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
+            len += strlen(currentOut);
+            printf("%s", currentOut);
+        } else if(b >= stack->GPR[SP]){
+            len = resetLen(len);
+            
             sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
             len += strlen(currentOut);
             printf("%s", currentOut);
@@ -166,4 +169,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
     free(currentOut);
 }
 
-//int tracePrintWord(int l,)
+static int resetLen(int len){
+    newline(stdout);
+    return len;
+}
