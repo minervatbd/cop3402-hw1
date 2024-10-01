@@ -70,7 +70,6 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
     int len = 0;
 
     // if a zero is printed, dont print any zeros after that.
-    int printNextZero = 1;
     int hasSkippedAhead = 0;
     int doubleZeros = 0;
 
@@ -79,7 +78,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
     for (int b = stack->GPR[GP]; b <= stack->GPR[FP]; b++) 
     {
         //ignore zero values not on the stack
-        if(hasSkippedAhead && doubleZeros && stack->stackMemory->words[b] == 0)
+        if(hasSkippedAhead && doubleZeros && stack->stackMemory->words[b] == 0 && b < stack->GPR[SP])
             continue;
 
         //line breaks
@@ -89,7 +88,6 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         // always print if its not a zero value or on the stack
         if (stack->stackMemory->words[b] != 0 || b >= stack->GPR[SP])
         {
-            printNextZero = 1;
             doubleZeros = 0;
             hasSkippedAhead = 0;
 

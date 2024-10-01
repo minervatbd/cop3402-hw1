@@ -67,9 +67,6 @@ void machine(int mode, char* inputFilename)
             currInstr = instructions[pc];
             pc++;
 
-            //parse instruction type (execution loop)
-            instr_type type = instruction_type(currInstr);
-    
             //trace instruction 
             if(tracingBool)
                 traceInstrPrint(currInstr, &pc);
@@ -330,7 +327,6 @@ void printMode(BOFFILE bof)
     word_type pc = header.text_start_address;
 
     instruction_print_table_heading(stdout);
-    bin_instr_t in;
 
     // printing instructions
     while (pc < header.text_start_address + header.text_length)
