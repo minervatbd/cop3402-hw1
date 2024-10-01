@@ -373,7 +373,7 @@ void printMode(BOFFILE bof)
             printNextZero = -1;
         }
 
-        else
+        else if (word != 0)
         {
             sprintf(currentOut, "%8d: %d", pc, word);
             len += strlen(currentOut);
