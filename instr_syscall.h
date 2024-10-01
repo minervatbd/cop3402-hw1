@@ -6,6 +6,8 @@
 
 #define TRACE_INSTR_PREFIX "==>"
 #define PC_PRINT "PC"
+#define HI_PRINT "HI"
+#define LO_PRINT "LO"
 #define GPR_PRINT "GPR"
 
 // comp format functions
