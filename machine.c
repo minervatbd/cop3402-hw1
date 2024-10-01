@@ -7,6 +7,7 @@
 #include "regname.h"
 #include "stack.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "instr_comp_0.h"
 #include "instr_comp_1.h"
