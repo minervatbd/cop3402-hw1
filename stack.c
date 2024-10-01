@@ -7,6 +7,7 @@
 
 Stack* initalizeStack(){
     Stack* myStack = (Stack*) malloc(sizeof(Stack));
+    myStack->stackMemory = (union mem_u*) malloc(sizeof(union mem_u));
     myStack->topOffset = 0;
     myStack->maxSize = STACK_HEIGHT;
     return myStack;
