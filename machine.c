@@ -20,7 +20,7 @@ void machine(int mode, char* inputFilename)
 {
     //read bof file input using bof library functions
     BOFFILE inFile = bof_read_open(inputFilename);
-    printf("%d\n", mode);
+    
     // -p has been passed, print mode function
     if (mode)
     {
@@ -54,6 +54,9 @@ void machine(int mode, char* inputFilename)
         for(int j = stack->GPR[GP]; j < stack->GPR[GP] + header.data_length; j++)
             stack->stackMemory->words[j] = bof_read_word(inFile);
 
+        //initial trace
+        traceStatePrint(&pc, &hi, &lo, stack);
+
         //beign instruction cycle and declare vars needed for invariant check and tracing
         bin_instr_t currInstr;
         //tracing is on by default
@@ -62,14 +65,12 @@ void machine(int mode, char* inputFilename)
         while(invariantCheck(stack, pc)){
             //fetch instruction
             currInstr = instructions[pc];
-            pc++;
-
-            //parse instruction type (execution loop)
-            instr_type type = instruction_type(currInstr);
-    
             //trace instruction 
             if(tracingBool)
                 traceInstrPrint(currInstr, &pc);
+
+            //update pc
+            pc++;
         
             // big switch thing for every single type of instruction
             switch (currInstr.comp.op) // pretending its a computer instruction to get opcode
@@ -306,18 +307,15 @@ void machine(int mode, char* inputFilename)
 void init(BOFHeader header, Stack* stack, address_type* pc, uword_type* hi, uword_type* lo)
 {
     // set $gp to header data start address (-1 because of zero indexing)
-    stack->GPR[GP] = header.data_start_address - 1;
+    stack->GPR[GP] = header.data_start_address;
 
     // set $sp and $fp to bottom of stack address, must be strictly greater than data start address (-1 because of zero indexing)
-    stack->GPR[SP] = header.stack_bottom_addr - 1;
-    stack->GPR[FP] = header.stack_bottom_addr - 1;
+    stack->GPR[SP] = header.stack_bottom_addr;
+    stack->GPR[FP] = header.stack_bottom_addr;
 
     // set pc to text address start, hi/lo to zero
     *pc = header.text_start_address;
-    *hi, *lo = 0;
-
-    //initial trace
-    traceStatePrint(pc, hi, lo, stack);
+    *hi = 0, *lo = 0;
 
     return;
 }
@@ -330,13 +328,11 @@ void printMode(BOFFILE bof)
     word_type pc = header.text_start_address;
 
     instruction_print_table_heading(stdout);
-    bin_instr_t in;
 
     // printing instructions
     while (pc < header.text_start_address + header.text_length)
     {
         printf("%6d: %s\n", pc, instruction_assembly_form((address_type) pc, instruction_read(bof)));
-        //instruction_print(stdout, pc, instruction_read(bof));
         pc++;
     }
 
@@ -365,7 +361,7 @@ void printMode(BOFFILE bof)
         {
             sprintf(currentOut, "%8d: %d", pc, word);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
             printNextZero = 0;
         }
             
@@ -373,15 +369,20 @@ void printMode(BOFFILE bof)
         {
             sprintf(currentOut, DATA_SEPARATOR);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
             printNextZero = -1;
+        }
+
+        else if (strcmp(currentOut, DATA_SEPARATOR) == 0)
+        {
+            continue;
         }
 
         else if (word != 0)
         {
             sprintf(currentOut, "%8d: %d", pc, word);
             len += strlen(currentOut);
-            printf(currentOut);
+            printf("%s", currentOut);
             printNextZero = 1;
         }
 
@@ -394,15 +395,17 @@ void printMode(BOFFILE bof)
         pc++;
     }
 
-    sprintf(currentOut, "%8d: %d", pc, 0);
-    len += strlen(currentOut);
-    printf(currentOut);
+    if (printNextZero == 1)
+    {
+        sprintf(currentOut, "%8d: %d", pc, 0);
+        len += strlen(currentOut);
+        printf("%s", currentOut);
 
-    if (len > MAX_DATA_LINE_LENGTH)
+        if (len > MAX_DATA_LINE_LENGTH)
         newline(stdout);
 
-    printf("%s", DATA_SEPARATOR);
-
+        printf("%s", DATA_SEPARATOR);
+    }
     //printf("%s\n", currentOut);
 
     newline(stdout);
@@ -416,32 +419,32 @@ void printMode(BOFFILE bof)
 int invariantCheck(Stack* stack, address_type pc){
     //evaluate invariant conditions and print error -> return 0 if conidtion is violated, else print 1
     if(stack->GPR[GP] < 0){
-        sprintf(stderr, "\nInvariant violated. Globals pointer cannot be less than zero.\n");
+        fprintf(stderr, "\nInvariant violated. Globals pointer cannot be less than zero.\n");
         return 0;
     }
 
     if(stack->GPR[GP] >= stack->GPR[SP]){
-        sprintf(stderr, "\nInvariant violated. Globals pointer cannot be greater than the stack pointer.\n");
+        fprintf(stderr, "\nInvariant violated. Globals pointer cannot be greater than the stack pointer.\n");
         return 0;
     }
 
     if(stack->GPR[SP] > stack->GPR[FP]){
-        sprintf(stderr, "\nInvariant violated. Stack pointer cannot be greater than the frame pointer.\n");
+        fprintf(stderr, "\nInvariant violated. Stack pointer cannot be greater than the frame pointer.\n");
         return 0;
     }
 
     if(stack->GPR[FP] >= MAX_MEMORY_SIZE){
-        sprintf(stderr, "\nInvariant violated. Frame pointer cannot reach maximum memory address.\n");
+        fprintf(stderr, "\nInvariant violated. Frame pointer cannot reach maximum memory address.\n");
         return 0;
     }
 
     if(pc < 0){
-        sprintf(stderr, "\nInvariant violated. Program counter must be a nonzero address.\n");
+        fprintf(stderr, "\nInvariant violated. Program counter must be a nonzero address.\n");
         return 0;
     }
 
     if(pc >= MAX_MEMORY_SIZE){
-        sprintf(stderr, "\nInvariant violated. Program counter must not exceed maximum memory address.\n");
+        fprintf(stderr, "\nInvariant violated. Program counter must not exceed maximum memory address.\n");
         return 0;
     }
 

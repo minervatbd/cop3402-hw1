@@ -6,6 +6,8 @@
 
 #define TRACE_INSTR_PREFIX "==>"
 #define PC_PRINT "PC"
+#define HI_PRINT "HI"
+#define LO_PRINT "LO"
 #define GPR_PRINT "GPR"
 
 // comp format functions
@@ -17,5 +19,6 @@ extern int startTrace();
 extern int stopTrace();
 extern void traceInstrPrint(bin_instr_t i, address_type* pc);
 extern void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* stack);
+static int resetLen(int len);
 
 #endif

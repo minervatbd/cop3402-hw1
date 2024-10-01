@@ -6,14 +6,14 @@
 #include "stack.h"
 
 #define MAX_MEMORY_SIZE 65536 
-#define MAX_DATA_LINE_LENGTH 59
+#define MAX_DATA_LINE_LENGTH 60
 #define DATA_SEPARATOR "        ...     "
 
 //main memory representation
 extern union mem_u {
 word_type words[MAX_MEMORY_SIZE];
 uword_type uwords[MAX_MEMORY_SIZE];
-};
+}stackMemory;
 
 
 void machine(int mode, char* inputFilename);
