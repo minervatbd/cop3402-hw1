@@ -123,5 +123,5 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
 static int resetLen(int len){
     newline(stdout);
-    return len;
+    return 0;
 }
