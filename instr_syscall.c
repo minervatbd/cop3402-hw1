@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "instr_syscall.h"
 #include "machine.h"
 #include "machine_types.h"
