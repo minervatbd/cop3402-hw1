@@ -395,9 +395,12 @@ void printMode(BOFFILE bof)
         pc++;
     }
 
-    sprintf(currentOut, "%8d: %d", pc, 0);
-    len += strlen(currentOut);
-    printf("%s", currentOut);
+    if (printNextZero)
+    {
+        sprintf(currentOut, "%8d: %d", pc, 0);
+        len += strlen(currentOut);
+        printf("%s", currentOut);
+    }
 
     if (len > MAX_DATA_LINE_LENGTH)
         newline(stdout);
