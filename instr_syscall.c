@@ -118,7 +118,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
                 len = 0;
             }
 
-            b = stack->GPR[SP - 1];
+            b = stack->GPR[SP] - 1;
 
             // we're supposed to print the sp-1 but only if its non-zero, otherwise skip it and newline
             if (stack->stackMemory->words[b] != 0)
