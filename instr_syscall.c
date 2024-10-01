@@ -65,7 +65,95 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         fprintf(stdout, "%s[%s]: %-6d", GPR_PRINT, regname_get(c), stack->GPR[c]);
     }
     newline(stdout);
-    
-    fprintf(stdout, "");
-    // data section TODO
+
+    // current line length
+    int len = 0;
+
+    // if a zero is printed, dont print any zeros after that.
+    int printNextZero = 1;
+
+    int hasSkippedAhead = 0;
+
+    char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH*2);
+
+    for (int b = stack->GPR[GP]; b <= stack->GPR[FP]; b++) 
+    {
+        if (len > MAX_DATA_LINE_LENGTH)
+        {
+            newline(stdout);
+            len = 0;
+        }
+        
+        // always print if its not a zero value
+        if (stack->stackMemory->words[b] != 0)
+        {
+            printNextZero = 1;
+
+            sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
+            len += strlen(currentOut);
+            printf(currentOut);
+        }
+
+        // this is the whole long thing that we do for the first time we hit a 0
+        else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead)
+        {
+            sprintf(currentOut, "%8d: %-6d", b, 0);
+            len += strlen(currentOut);
+            printf(currentOut);
+
+            if (len > MAX_DATA_LINE_LENGTH)
+            {
+                newline(stdout);
+                len = 0;
+            }
+
+            sprintf(currentOut, "%8s", DATA_SEPARATOR);
+            len += strlen(currentOut);
+            printf(currentOut);
+
+            if (len > MAX_DATA_LINE_LENGTH)
+            {
+                newline(stdout);
+                len = 0;
+            }
+
+            b = stack->GPR[SP - 1];
+
+            // we're supposed to print the sp-1 but only if its non-zero, otherwise skip it and newline
+            if (stack->stackMemory->words[b] != 0)
+            {
+                sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
+                len += strlen(currentOut);
+                printf(currentOut);
+            }
+
+            b++;
+
+            newline(stdout);
+
+            hasSkippedAhead = 1;
+        }
+
+        // (after skipping to sp) where the current value is zero, and a zero has not been printed directly before
+        else if (stack->stackMemory->words[b] == 0 && hasSkippedAhead && printNextZero == 1)
+        {
+            sprintf(currentOut, "%8d: %-6d", b, 0);
+            len += strlen(currentOut);
+            printf(currentOut);
+
+            printNextZero = 0;
+        }
+
+        // (after skipping to sp) if current value is zero and previous value printed was 0, print a data separator instead
+        else if (stack->stackMemory->words[b] == 0 && hasSkippedAhead && printNextZero == 0)
+        {
+            sprintf(currentOut, "%8s", DATA_SEPARATOR);
+            len += strlen(currentOut);
+            printf(currentOut);
+
+            printNextZero = -1;
+        }
+    }
+
+    free(currentOut);
 }
