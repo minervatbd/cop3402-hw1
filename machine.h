@@ -5,7 +5,9 @@
 #include "machine_types.h"
 #include "stack.h"
 
+//macros for data and output line len
 #define MAX_MEMORY_SIZE 65536 
+#define MAX_DATA_LINE_LENGTH_P 59
 #define MAX_DATA_LINE_LENGTH 79
 #define DATA_SEPARATOR "        ...     "
 
