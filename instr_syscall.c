@@ -158,8 +158,8 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             printNextZero = -1;
         }
 
-        if (b == stack->GPR[FP] && stack->stackMemory->words[b] == 0)
-            fprintf(stdout, "%8d: %-6d", b, stack->stackMemory->words[b]);
+        //if (b == stack->GPR[FP] && stack->stackMemory->words[b] == 0)
+        //    fprintf(stdout, "%8d: %-6d", b, stack->stackMemory->words[b]);
     }
 
     newline(stdout);
