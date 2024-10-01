@@ -72,9 +72,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
     // if a zero is printed, dont print any zeros after that.
     int printNextZero = 1;
-
     int hasSkippedAhead = 0;
-
     int doubleZeros = 0;
 
     char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH*2);
@@ -87,8 +85,8 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             len = 0;
         }
         
-        // always print if its not a zero value
-        if (stack->stackMemory->words[b] != 0)
+        // always print if its not a zero value or on the stack
+        if (stack->stackMemory->words[b] != 0 || b >= stack->GPR[SP])
         {
             printNextZero = 1;
             doubleZeros = 0;
@@ -167,3 +165,5 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 
     free(currentOut);
 }
+
+//int tracePrintWord(int l,)
