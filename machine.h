@@ -6,7 +6,7 @@
 #include "stack.h"
 
 #define MAX_MEMORY_SIZE 65536 
-#define MAX_DATA_LINE_LENGTH 59
+#define MAX_DATA_LINE_LENGTH 60
 #define DATA_SEPARATOR "        ...     "
 
 //main memory representation
