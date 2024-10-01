@@ -400,13 +400,12 @@ void printMode(BOFFILE bof)
         sprintf(currentOut, "%8d: %d", pc, 0);
         len += strlen(currentOut);
         printf("%s", currentOut);
-    }
 
-    if (len > MAX_DATA_LINE_LENGTH)
+        if (len > MAX_DATA_LINE_LENGTH)
         newline(stdout);
 
-    printf("%s", DATA_SEPARATOR);
-
+        printf("%s", DATA_SEPARATOR);
+    }
     //printf("%s\n", currentOut);
 
     newline(stdout);
