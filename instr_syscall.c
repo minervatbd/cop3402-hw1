@@ -148,7 +148,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         // (after skipping to sp) if current value is zero and previous value printed was 0, print a data separator instead
         else if (stack->stackMemory->words[b] == 0 && hasSkippedAhead && printNextZero == 0)
         {
-            sprintf(currentOut, "%8s", DATA_SEPARATOR);
+            sprintf(currentOut, "%s", DATA_SEPARATOR);
             len += strlen(currentOut);
             printf(currentOut);
 
