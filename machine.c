@@ -373,6 +373,11 @@ void printMode(BOFFILE bof)
             printNextZero = -1;
         }
 
+        else if (strcmp(currentOut, DATA_SEPARATOR) == 0)
+        {
+            continue;
+        }
+
         else if (word != 0)
         {
             sprintf(currentOut, "%8d: %d", pc, word);
