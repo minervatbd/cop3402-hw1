@@ -132,11 +132,11 @@ static int resetLen(){
 }
 
 static int stdPrint(char** currentOut, int len, int adr, word_type instr){
-    int out;
     sprintf(*currentOut, "%8d: %-6d", adr, instr);
-    if ((out = len + strlen(*currentOut)) > MAX_DATA_LINE_LENGTH)
-        len = resetLen();
-
     printf("%s", *currentOut);
-    return out;
+
+    if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH)
+        return resetLen();
+        
+    else return strlen(*currentOut);
 }
