@@ -81,36 +81,41 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         if(hasSkippedAhead && doubleZeros && stack->stackMemory->words[b] == 0 && b < stack->GPR[SP])
             continue;
 
-        //line breaks
-        if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP])
-            len = resetLen(len);
+        //line breaks and reset for stack memory
+        if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP]){
+            len = resetLen();
+            
+            if(b == stack->GPR[SP]){
+                hasSkippedAhead = 0;
+                doubleZeros = 0;
+            }
+        }
+            
         
-        // always print if its not a zero value or on the stack
-        if (stack->stackMemory->words[b] != 0 || b >= stack->GPR[SP])
+        // always print if its not a zero value
+        if (stack->stackMemory->words[b] != 0)
         {
             doubleZeros = 0;
             hasSkippedAhead = 0;
 
-            sprintf(currentOut, "%8d: %-6d", b, stack->stackMemory->words[b]);
-            len += strlen(currentOut);
-            printf("%s", currentOut);
+            len += stdPrint(&currentOut, len, b, stack->stackMemory->words[b]);
         } 
         // first time we hit a 0
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && !doubleZeros)
         {
-            sprintf(currentOut, "%8d: %-6d", b, 0);
-            len += strlen(currentOut);
-            printf("%s", currentOut);
-
-            doubleZeros = 1;
+            len += stdPrint(&currentOut, len, b, 0);
+            doubleZeros =  1;
         }
         //initiate skipping and print ellipses
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && doubleZeros)
         {
+            sprintf(currentOut, "%s", DATA_SEPARATOR);
+            len += 16;
 
-            sprintf(currentOut, "%8s", DATA_SEPARATOR);
-            len += strlen(currentOut);
-            printf("%s", currentOut);
+            // if(len > MAX_DATA_LINE_LENGTH)
+            //     len = resetLen();
+
+            printf("%8s", currentOut);
             hasSkippedAhead = 1;
         }
     }
@@ -121,7 +126,18 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
     free(currentOut);
 }
 
-static int resetLen(int len){
+static int resetLen(){
     newline(stdout);
     return 0;
+}
+
+static int stdPrint(char** currentOut, int len, int adr, word_type instr){
+    sprintf(*currentOut, "%8d: %-6d", adr, instr);
+    printf("%s", *currentOut);
+
+    if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH){
+        return  resetLen() - len;
+    }
+    
+    return strlen(*currentOut);
 }

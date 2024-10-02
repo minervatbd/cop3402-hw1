@@ -5,9 +5,11 @@
 #include "machine_types.h"
 #include "stack.h"
 
+//macros for memory and data outputs
 #define MAX_MEMORY_SIZE 65536 
-#define MAX_DATA_LINE_LENGTH 60
-#define DATA_SEPARATOR "        ...     "
+#define MAX_DATA_LINE_LENGTH 79
+#define MAX_DATA_LINE_LENGTH_P 59
+#define DATA_SEPARATOR "        ...     "          
 
 //main memory representation
 extern union mem_u {
