@@ -31,7 +31,7 @@ void printString(bin_instr_t i, Stack* stack)
         pos++;
     }
 
-    stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s\n", out);
+    stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s", out);
     free(out);
 }
 
@@ -64,11 +64,11 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 {
     fprintf(stdout, "%8s: %-6d", PC_PRINT, *pc);
 
-    if (*hi)
+    if (*hi || *lo){
         fprintf(stdout, "%s: %-6d", HI_PRINT, *hi);
-    
-    if (*lo)
         fprintf(stdout, "%s: %-6d", LO_PRINT, *lo);
+    }
+
     
     newline(stdout);
 
@@ -97,14 +97,14 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             continue;
 
         //line breaks and reset for stack memory
-        if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP]){
+        if (len > MAX_DATA_LINE_LENGTH)
             len = resetLen();
-            
-            if(b == stack->GPR[SP]){
-                hasSkippedAhead = 0;
-                doubleZeros = 0;
-            }
-        }
+
+        if(b == stack->GPR[SP]){
+            len = resetLen();
+            hasSkippedAhead = 0;
+            doubleZeros = 0;
+        }   
             
         
         // always print if its not a zero value

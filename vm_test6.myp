@@ -1,0 +1,10 @@
+Address Instruction
+     0: ADDI $sp, -1, 16
+     1: SRI $sp, 1
+     2: LIT $sp, 0, 4
+     3: LWR $r5, $sp, 0
+     4: SWR $sp, 0, $r5
+     5: CFHI $gp, 1
+     6: SLL $sp, 0, 10
+     7: CFLO $sp, -1
+Unknown function code (0) in instruction_otherCompFunc2name

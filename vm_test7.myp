@@ -1,0 +1,14 @@
+Address Instruction
+     0: SRI $sp, 6
+     1: LIT $sp, 5, 6
+     2: LWR $r5, $sp, 4
+     3: LIT $sp, 2, 3
+     4: SCA $sp, 0, $sp, 0
+     5: LIT $sp, 0, -1
+     6: LWR $r4, $sp, 0
+     7: CALL 65537	# target is word address 65537
+     8: SRI $sp, 5
+     9: SWR $sp, 2, $r4
+    10: RTN 
+    11: LWR $r4, $sp, 2
+Cannot read instruction from vm_test7.bof (read 0 instrs)
