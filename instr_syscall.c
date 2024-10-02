@@ -110,7 +110,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && doubleZeros)
         {
             sprintf(currentOut, "%s", DATA_SEPARATOR);
-            len += strlen(16);
+            len += 16;
 
             // if(len > MAX_DATA_LINE_LENGTH)
             //     len = resetLen();
@@ -133,13 +133,11 @@ static int resetLen(){
 
 static int stdPrint(char** currentOut, int len, int adr, word_type instr){
     sprintf(*currentOut, "%8d: %-6d", adr, instr);
-
-    if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH){
-        printf("%s", *currentOut);
-        return  resetLen() - len;
-    }
-        
     printf("%s", *currentOut);
 
+    if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH){
+        return  resetLen() - len;
+    }
+    
     return strlen(*currentOut);
 }
