@@ -84,8 +84,11 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
         //line breaks and reset for stack memory
         if (len > MAX_DATA_LINE_LENGTH || b == stack->GPR[SP]){
             len = resetLen();
-            hasSkippedAhead = 0;
-            doubleZeros = 0;
+            
+            if(b == stack->GPR[SP]){
+                hasSkippedAhead = 0;
+                doubleZeros = 0;
+            }
         }
             
         
