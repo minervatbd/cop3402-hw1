@@ -27,7 +27,7 @@ void printString(bin_instr_t i, Stack* stack)
     while (a > 0)
     {
         out[pos] = (char) 0xff & a;
-        a >> 8;
+        a = a >> 8;
         pos++;
     }
 
