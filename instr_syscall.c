@@ -19,7 +19,7 @@ void exitProgam(bin_instr_t i)
 
 void printString(bin_instr_t i, Stack* stack)
 {
-    char test[100] = stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
+    char test[100] = (char *) stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
     machine_types_formOffset(i.syscall.offset)];
     stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s", &test);
 }
