@@ -98,12 +98,12 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             doubleZeros = 0;
             hasSkippedAhead = 0;
 
-            len = stdPrint(&currentOut, len, b, stack->stackMemory->words[b]);
+            len += stdPrint(&currentOut, len, b, stack->stackMemory->words[b]);
         } 
         // first time we hit a 0
         else if (stack->stackMemory->words[b] == 0 && !hasSkippedAhead && !doubleZeros)
         {
-            len = stdPrint(&currentOut, len, b, 0);
+            len += stdPrint(&currentOut, len, b, 0);
             doubleZeros =  1;
         }
         //initiate skipping and print ellipses
