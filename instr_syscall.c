@@ -136,7 +136,7 @@ static int stdPrint(char** currentOut, int len, int adr, word_type instr){
     printf("%s", *currentOut);
 
     if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH)
-         return resetLen();
+         return  resetLen() - len;
 
     else return strlen(*currentOut);
 }
