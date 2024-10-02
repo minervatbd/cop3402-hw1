@@ -31,7 +31,7 @@ void printString(bin_instr_t i, Stack* stack)
         pos++;
     }
 
-    stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s", out);
+    stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s\n", out);
     free(out);
 }
 
