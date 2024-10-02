@@ -19,8 +19,20 @@ void exitProgam(bin_instr_t i)
 
 void printString(bin_instr_t i, Stack* stack)
 {
-    stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s", &stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
-    machine_types_formOffset(i.syscall.offset)]);
+    int a = stack->stackMemory->words[stack->GPR[i.syscall.reg] + 
+    machine_types_formOffset(i.syscall.offset)];
+    char* out = (char*) malloc(sizeof(char)*32);
+    int pos = 0;
+
+    while (a > 0)
+    {
+        out[pos] = (char) 0xff & a;
+        a = a >> 8;
+        pos++;
+    }
+
+    stack->stackMemory->words[stack->GPR[SP]] = fprintf(stdout, "%s\n", out);
+    free(out);
 }
 
 void printChar(bin_instr_t i,  Stack* stack)
