@@ -8,6 +8,9 @@
 #include "stack.h"
 #include "utilities.h"
 
+// prototypes for static funcs
+static int resetLen();
+static int stdPrint(char** currentOut, int len, int adr, word_type instr);
 
 void exitProgam(bin_instr_t i)
 {
