@@ -7,7 +7,7 @@
 
 //macros for memory and data outputs
 #define MAX_MEMORY_SIZE 65536 
-#define MAX_DATA_LINE_LENGTH 79
+#define MAX_DATA_LINE_LENGTH 80
 #define MAX_DATA_LINE_LENGTH_P 59
 #define DATA_SEPARATOR "        ...     "
 
