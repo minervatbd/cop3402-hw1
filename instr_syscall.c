@@ -52,11 +52,11 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
 {
     fprintf(stdout, "%8s: %-6d", PC_PRINT, *pc);
 
-    if (*hi)
+    if (*hi || *lo){
         fprintf(stdout, "%s: %-6d", HI_PRINT, *hi);
-    
-    if (*lo)
         fprintf(stdout, "%s: %-6d", LO_PRINT, *lo);
+    }
+
     
     newline(stdout);
 
