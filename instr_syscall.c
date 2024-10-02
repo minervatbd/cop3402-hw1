@@ -115,7 +115,7 @@ void traceStatePrint(address_type* pc, uword_type* hi, uword_type* lo, Stack* st
             if(len > MAX_DATA_LINE_LENGTH)
                 len = resetLen();
 
-            printf("%16s", currentOut);
+            printf("%8s", currentOut);
             hasSkippedAhead = 1;
         }
     }
