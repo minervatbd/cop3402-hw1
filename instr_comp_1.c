@@ -24,7 +24,7 @@ void multiply(bin_instr_t i, Stack* stack, uword_type* lo, uword_type* hi)
      long temp = (stack->stackMemory->words[stack->GPR[SP]] * stack->stackMemory->words[stack->GPR[i.othc.reg] + machine_types_formOffset(i.othc.offset)]);
     
     //get least significant bits
-    *lo = temp;
+    *lo = temp ^ 0x00000000;
 
     //get most significant bits
     *hi = temp >> 32;
