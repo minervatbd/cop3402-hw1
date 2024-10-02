@@ -135,9 +135,8 @@ static int stdPrint(char** currentOut, int len, int adr, word_type instr){
     sprintf(*currentOut, "%8d: %-6d", adr, instr);
     printf("%s", *currentOut);
 
-    // if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH)
-    //     return resetLen();
+    if (len + strlen(*currentOut) > MAX_DATA_LINE_LENGTH)
+         return resetLen();
 
-    //else 
-    return strlen(*currentOut);
+    else return strlen(*currentOut);
 }
