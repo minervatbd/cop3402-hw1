@@ -1,0 +1,1 @@
+Assertion failed: instr.syscall.op == OTHC_O && instr.syscall.func == SYS_F, file instruction.c, line 429

@@ -1,0 +1,5 @@
+Address Instruction
+     0: LIT $sp, 0, 17
+     1: LIT $sp, 0, 19
+     2: LWI $sp, -2, $sp, -1
+Cannot read instruction from vm_test8.bof (read 0 instrs)
