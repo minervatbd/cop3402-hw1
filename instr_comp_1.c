@@ -21,11 +21,13 @@ void subRegImmediate(bin_instr_t i, Stack* stack)
 
 void multiply(bin_instr_t i, Stack* stack, uword_type* lo, uword_type* hi)
 {
-    //get most significant bit
+     long temp = (stack->stackMemory->words[stack->GPR[SP]] * stack->stackMemory->words[stack->GPR[i.othc.reg] + machine_types_formOffset(i.othc.offset)]);
+    
+    //get least significant bits
+    *lo = temp;
 
-    //get least significant bit
-    *lo = (stack->stackMemory->words[stack->GPR[SP]] * stack->stackMemory->words[stack->GPR[i.othc.reg] + machine_types_formOffset(i.othc.offset)] & 1);
-
+    //get most significant bits
+    *hi = temp >> 32;
 }
 
 void divide(bin_instr_t i, Stack* stack, uword_type* lo, uword_type* hi)
