@@ -30,6 +30,8 @@
 
 # Executables
 *.exe
+*.myo
+*.myp
 *.app
 *.i*86
 *.x86_64
