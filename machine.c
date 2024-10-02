@@ -350,7 +350,7 @@ void printMode(BOFFILE bof)
     // if a zero is printed, dont print any zeros after that.
     int printNextZero = 1;
 
-    char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH*2);
+    char* currentOut = (char*) malloc(sizeof(char)*MAX_DATA_LINE_LENGTH_P*2);
 
     // data section start
     while (pc < header.data_start_address + header.data_length)
@@ -386,7 +386,7 @@ void printMode(BOFFILE bof)
             printNextZero = 1;
         }
 
-        if (len > MAX_DATA_LINE_LENGTH)
+        if (len > MAX_DATA_LINE_LENGTH_P)
         {
             newline(stdout);
             len = 0;
@@ -401,7 +401,7 @@ void printMode(BOFFILE bof)
         len += strlen(currentOut);
         printf("%s", currentOut);
 
-        if (len > MAX_DATA_LINE_LENGTH)
+        if (len > MAX_DATA_LINE_LENGTH_P)
         newline(stdout);
 
         printf("%s", DATA_SEPARATOR);
